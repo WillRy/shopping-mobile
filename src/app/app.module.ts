@@ -1,3 +1,4 @@
+import { ResetPhoneNumberPage } from './../pages/reset-phone-number/reset-phone-number';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
@@ -8,12 +9,17 @@ import { ListPage } from '../pages/list/list';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { LoginOptionsPage } from '../pages/login-options/login-options';
+import { LoginPhoneNumberPage } from '../pages/login-phone-number/login-phone-number';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    ListPage
+    ListPage,
+    LoginOptionsPage,
+    LoginPhoneNumberPage,
+    ResetPhoneNumberPage
   ],
   imports: [
     BrowserModule,
@@ -23,7 +29,10 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   entryComponents: [
     MyApp,
     HomePage,
-    ListPage
+    ListPage,
+    LoginOptionsPage,
+    LoginPhoneNumberPage,
+    ResetPhoneNumberPage
   ],
   providers: [
     StatusBar,
