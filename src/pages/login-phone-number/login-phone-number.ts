@@ -1,5 +1,15 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {
+  FirebaseAuthProvider
+} from './../../providers/auth/firebase-auth';
+import {
+  Component
+} from '@angular/core';
+import {
+  IonicPage,
+  NavController,
+  NavParams
+} from 'ionic-angular';
+
 
 /**
  * Generated class for the LoginPhoneNumberPage page.
@@ -15,11 +25,13 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class LoginPhoneNumberPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private firebaseAuth: FirebaseAuthProvider) {
+
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad LoginPhoneNumberPage');
+    this.firebaseAuth.getToken().then((token) => console.log(token), (error) => console.log(error));
+    this.firebaseAuth.makePhoneNumberForm('#firebaseui');
   }
 
 }
