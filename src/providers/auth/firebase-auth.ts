@@ -48,6 +48,7 @@ export class FirebaseAuthProvider {
     };
     const ui = new firebaseui.auth.AuthUI(firebase.auth());
     ui.start('#firebase-ui', uiConfig);
+
   }
 
   private async getFirebaseUI() {
@@ -88,6 +89,7 @@ export class FirebaseAuthProvider {
         throw new Error('User not found');
       }
       const token = await user.getIdTokenResult();
+
       return token.token;
     } catch (e) {
       return Promise.reject(e);

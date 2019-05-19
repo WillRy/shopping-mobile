@@ -7,8 +7,15 @@ import {
 import {
   IonicPage,
   NavController,
-  NavParams
+  NavParams,
+  LoadingController
 } from 'ionic-angular';
+import {
+  AuthProvider
+} from '../../providers/auth/auth';
+import {
+  MainPage
+} from '../main/main';
 
 
 /**
@@ -25,13 +32,60 @@ import {
 })
 export class LoginPhoneNumberPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private firebaseAuth: FirebaseAuthProvider) {
+  loader;
+
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    private firebaseAuth: FirebaseAuthProvider,
+    private authService: AuthProvider,
+    public loadingCtrl: LoadingController
+  ) {
 
   }
+
+
 
   ionViewDidLoad() {
-    this.firebaseAuth.getToken().then((token) => console.log(token), (error) => console.log(error));
+
+    const unsubscribe = this.firebaseAuth.firebase.auth().onAuthStateChanged((user) => {
+      this.showLoading();
+      if (user) {
+
+        this.authService.login().subscribe(
+          (token) => {
+            this.dismissLoading();
+            this.redirectToMainPage();
+
+          },
+          (error) => {
+            this.dismissLoading();
+          });
+        unsubscribe();
+      } else {
+
+        this.dismissLoading();
+      }
+    });
     this.firebaseAuth.makePhoneNumberForm('#firebaseui');
   }
+
+  redirectToMainPage() {
+    this.navCtrl.setRoot(MainPage);
+  }
+
+  showLoading() {
+    this.loader = this.loadingCtrl.create({
+      content: "Por favor, aguarde!"
+    });
+    this.loader.present();
+  }
+
+  dismissLoading() {
+    if (this.loader) {
+      this.loader.dismiss();
+    }
+  }
+
 
 }
