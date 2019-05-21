@@ -34,6 +34,8 @@ export class CustomerCreatePage {
 
   form: FormGroup;
 
+  photoPreview = false;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -56,11 +58,11 @@ export class CustomerCreatePage {
   }
 
   onChoosePhoto(files: FileList) {
-
+    console.log(files);
     if(!files.length){
       return;
     }
-
+    this.makePhotoPreview(files[0]);
     this.form.get('photo').setValue(files[0]);
   }
 
@@ -71,8 +73,25 @@ export class CustomerCreatePage {
   selectPhoto() {
     const nativeElement = this.inputFilePhoto.getElementRef().nativeElement;
     const inputFile = nativeElement.querySelector('input');
-    console.log(inputFile);
     inputFile.click();
-
   }
+
+  makePhotoPreview(file: File) {
+    const render = new FileReader();
+    render.readAsDataURL(file);
+    render.onloadend = (event: ProgressEvent) => {
+      const target = event.target;
+      this.photoPreview = (<any>target).result;
+    }
+  }
+
+  removePhoto() {
+    const nativeElement = this.inputFilePhoto.getElementRef().nativeElement;
+    const inputFile = nativeElement.querySelector('input');
+    inputFile.value='';
+    this.photoPreview = null;
+    this.form.get('photo').setValue(null);
+  }
+
+
 }
