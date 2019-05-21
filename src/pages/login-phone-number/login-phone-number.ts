@@ -1,3 +1,4 @@
+import { CustomerCreatePage } from './../customer-create/customer-create';
 import {
   FirebaseAuthProvider
 } from './../../providers/auth/firebase-auth';
@@ -59,7 +60,9 @@ export class LoginPhoneNumberPage {
 
           },
           (error) => {
+
             this.dismissLoading();
+            this.navCtrl.setRoot(CustomerCreatePage);
           });
         unsubscribe();
       } else {

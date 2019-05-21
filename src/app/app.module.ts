@@ -1,3 +1,4 @@
+import { CustomerCreatePage } from './../pages/customer-create/customer-create';
 import { ResetPhoneNumberPage } from './../pages/reset-phone-number/reset-phone-number';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
@@ -15,6 +16,8 @@ import { FirebaseAuthProvider } from '../providers/auth/firebase-auth';
 import { AuthProvider } from '../providers/auth/auth';
 import { HttpClientModule } from '@angular/common/http';
 import { MainPage } from '../pages/main/main';
+import { ReactiveFormsModule } from '@angular/forms';
+import { CustomerHttpProvider } from '../providers/http/customer-http';
 
 @NgModule({
   declarations: [
@@ -24,12 +27,14 @@ import { MainPage } from '../pages/main/main';
     LoginOptionsPage,
     LoginPhoneNumberPage,
     ResetPhoneNumberPage,
+    CustomerCreatePage,
     MainPage
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -39,6 +44,7 @@ import { MainPage } from '../pages/main/main';
     LoginOptionsPage,
     LoginPhoneNumberPage,
     ResetPhoneNumberPage,
+    CustomerCreatePage,
     MainPage
   ],
   providers: [
@@ -46,7 +52,8 @@ import { MainPage } from '../pages/main/main';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     FirebaseAuthProvider,
-    AuthProvider
+    AuthProvider,
+    CustomerHttpProvider
   ]
 })
 export class AppModule {}
