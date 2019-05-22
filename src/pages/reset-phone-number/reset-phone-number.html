@@ -5,11 +5,20 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-  <ion-navbar>
-    <ion-title>reset-phone-number</ion-title>
+  <ion-navbar color="green-dark">
+    <ion-title>Alterar Telefone</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
+  <ion-list>
+    <ion-item>
+      <ion-label stacked>Email</ion-label>
+      <ion-input type="text" [formControl]="email"></ion-input>
+    </ion-item>
+  </ion-list>
+  <button ion-button color="green-dark" block (click)="showFirebaseUI()" [hidden]="canShowFirebaseUI"
+    [disabled]="email.invalid">Continuar</button>
 
+    <div id="firebase-ui" [hidden]="!canShowFirebaseUI || email.invalid"></div>
 </ion-content>

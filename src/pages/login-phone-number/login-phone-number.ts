@@ -52,13 +52,13 @@ export class LoginPhoneNumberPage {
   ionViewDidLoad() {
 
     const unsubscribed = this.firebaseAuth.firebase.auth().onAuthStateChanged((user) => {
-      console.log(1);
+
       if (user) {
         this.handleAuthUser();
         unsubscribed();
       }
     });
-    console.log(2);
+
     this.firebaseAuth.makePhoneNumberForm('#firebase-ui');
   }
 
