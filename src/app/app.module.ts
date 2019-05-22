@@ -1,3 +1,5 @@
+import { CustomerCreatePage } from './../pages/customer-create/customer-create';
+import { ResetPhoneNumberPage } from './../pages/reset-phone-number/reset-phone-number';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
@@ -8,27 +10,50 @@ import { ListPage } from '../pages/list/list';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { LoginOptionsPage } from '../pages/login-options/login-options';
+import { LoginPhoneNumberPage } from '../pages/login-phone-number/login-phone-number';
+import { FirebaseAuthProvider } from '../providers/auth/firebase-auth';
+import { AuthProvider } from '../providers/auth/auth';
+import { HttpClientModule } from '@angular/common/http';
+import { MainPage } from '../pages/main/main';
+import { ReactiveFormsModule } from '@angular/forms';
+import { CustomerHttpProvider } from '../providers/http/customer-http';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    ListPage
+    ListPage,
+    LoginOptionsPage,
+    LoginPhoneNumberPage,
+    ResetPhoneNumberPage,
+    CustomerCreatePage,
+    MainPage
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
     HomePage,
-    ListPage
+    ListPage,
+    LoginOptionsPage,
+    LoginPhoneNumberPage,
+    ResetPhoneNumberPage,
+    CustomerCreatePage,
+    MainPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    FirebaseAuthProvider,
+    AuthProvider,
+    CustomerHttpProvider
   ]
 })
 export class AppModule {}
