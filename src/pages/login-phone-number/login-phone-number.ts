@@ -1,4 +1,6 @@
-import { CustomerCreatePage } from './../customer-create/customer-create';
+import {
+  CustomerCreatePage
+} from './../customer-create/customer-create';
 import {
   FirebaseAuthProvider
 } from './../../providers/auth/firebase-auth';
@@ -49,32 +51,40 @@ export class LoginPhoneNumberPage {
 
   ionViewDidLoad() {
 
-    const unsubscribe = this.firebaseAuth.firebase.auth().onAuthStateChanged((user) => {
-      this.showLoading();
+    const unsubscribed = this.firebaseAuth.firebase.auth().onAuthStateChanged((user) => {
+      console.log(1);
       if (user) {
-
-        this.authService.login().subscribe(
-          (token) => {
-            this.dismissLoading();
-            this.redirectToMainPage();
-
-          },
-          (error) => {
-
-            this.dismissLoading();
-            this.navCtrl.setRoot(CustomerCreatePage);
-          });
-        unsubscribe();
-      } else {
-
-        this.dismissLoading();
+        this.handleAuthUser();
+        unsubscribed();
       }
     });
-    this.firebaseAuth.makePhoneNumberForm('#firebaseui');
+    console.log(2);
+    this.firebaseAuth.makePhoneNumberForm('#firebase-ui');
+  }
+
+  handleAuthUser() {
+    this.authService
+      .login()
+      .subscribe((token) => {
+        this.redirectToMainPage();
+      }, (responseError) => {
+        console.log('entrou no erro');
+        this.firebaseAuth
+          .makePhoneNumberForm('#firebase-ui')
+          .then(() => {
+            console.log('entrou no retorno');
+            this.handleAuthUser()
+          });
+        this.redirectToCustomerCreatePage();
+      });
   }
 
   redirectToMainPage() {
     this.navCtrl.setRoot(MainPage);
+  }
+
+  redirectToCustomerCreatePage() {
+    this.navCtrl.push(CustomerCreatePage);
   }
 
   showLoading() {
