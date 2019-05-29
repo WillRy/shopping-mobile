@@ -1,23 +1,25 @@
-import { CustomerCreatePage } from './../pages/customer-create/customer-create';
-import { ResetPhoneNumberPage } from './../pages/reset-phone-number/reset-phone-number';
+import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import { SuperTabsModule } from "ionic2-super-tabs";
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
+import { MainPage } from './../pages/main/main';
+import { ResetPhoneNumberPage } from './../pages/reset-phone-number/reset-phone-number';
+import { LoginPhoneNumberPage } from './../pages/login-phone-number/login-phone-number';
+import { LoginOptionsPage } from './../pages/login-options/login-options';
+import { CustomerCreatePage } from '../pages/customer-create/customer-create';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { LoginOptionsPage } from '../pages/login-options/login-options';
-import { LoginPhoneNumberPage } from '../pages/login-phone-number/login-phone-number';
 import { FirebaseAuthProvider } from '../providers/auth/firebase-auth';
 import { AuthProvider } from '../providers/auth/auth';
-import { HttpClientModule } from '@angular/common/http';
-import { MainPage } from '../pages/main/main';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CustomerHttpProvider } from '../providers/http/customer-http';
+import { ChatGroupListComponent } from '../components/chat-group-list/chat-group-list';
 
 @NgModule({
   declarations: [
@@ -28,13 +30,15 @@ import { CustomerHttpProvider } from '../providers/http/customer-http';
     LoginPhoneNumberPage,
     ResetPhoneNumberPage,
     CustomerCreatePage,
-    MainPage
+    MainPage,
+    ChatGroupListComponent
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SuperTabsModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -45,7 +49,8 @@ import { CustomerHttpProvider } from '../providers/http/customer-http';
     LoginPhoneNumberPage,
     ResetPhoneNumberPage,
     CustomerCreatePage,
-    MainPage
+    MainPage,
+    ChatGroupListComponent
   ],
   providers: [
     StatusBar,
