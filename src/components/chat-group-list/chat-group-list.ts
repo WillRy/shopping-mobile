@@ -1,6 +1,6 @@
 import { FirebaseAuthProvider } from './../../providers/auth/firebase-auth';
 import { Component } from '@angular/core';
-import { chatGroup } from '../../app/model';
+import { ChatGroup } from '../../app/model';
 
 
 /**
@@ -15,7 +15,7 @@ import { chatGroup } from '../../app/model';
 })
 export class ChatGroupListComponent {
 
-  groups: chatGroup[] = [];
+  groups: ChatGroup[] = [];
 
   constructor(private firebaseAuth: FirebaseAuthProvider) {
 
@@ -24,12 +24,12 @@ export class ChatGroupListComponent {
   ngOnInit() {
     const database = this.firebaseAuth.firebase.database();
     database.ref('chat_groups').on('child_added', (data) => {
-      const group = data.val() as chatGroup;
+      const group = data.val() as ChatGroup;
       this.groups.push(group);
     });
 
     database.ref('chat_groups').on('child_changed', (data) => {
-      const group = data.val() as chatGroup;
+      const group = data.val() as ChatGroup;
       const index = this.groups.findIndex((g) => g.id === group.id);
       if (index != -1) {
         this.groups[index] = group;

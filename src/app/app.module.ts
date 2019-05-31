@@ -12,7 +12,7 @@ import { ResetPhoneNumberPage } from './../pages/reset-phone-number/reset-phone-
 import { LoginPhoneNumberPage } from './../pages/login-phone-number/login-phone-number';
 import { LoginOptionsPage } from './../pages/login-options/login-options';
 import { CustomerCreatePage } from '../pages/customer-create/customer-create';
-
+import {JwtModule, JWT_OPTIONS} from '@auth0/angular-jwt';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { FirebaseAuthProvider } from '../providers/auth/firebase-auth';
@@ -20,6 +20,17 @@ import { AuthProvider } from '../providers/auth/auth';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CustomerHttpProvider } from '../providers/http/customer-http';
 import { ChatGroupListComponent } from '../components/chat-group-list/chat-group-list';
+
+function jwtFactory(authProvider: AuthProvider) {
+  return {
+    tokenGetter: () => {
+      return authProvider.getToken();
+    },
+    whitelistedDomains: [
+      new RegExp('localhost:8000/*')
+    ]
+  };
+}
 
 @NgModule({
   declarations: [
@@ -39,6 +50,13 @@ import { ChatGroupListComponent } from '../components/chat-group-list/chat-group
     HttpClientModule,
     ReactiveFormsModule,
     SuperTabsModule.forRoot(),
+    JwtModule.forRoot({
+      jwtOptionsProvider: {
+        provide: JWT_OPTIONS,
+        useFactory: jwtFactory,
+        deps: [AuthProvider]
+      }
+    }),
   ],
   bootstrap: [IonicApp],
   entryComponents: [

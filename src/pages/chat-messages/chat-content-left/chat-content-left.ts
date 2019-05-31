@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Message } from '@angular/compiler/src/i18n/i18n_ast';
+import { ChatMessage } from '../../../app/model';
 
 /**
  * Generated class for the ChatContentLeftComponent component.
@@ -14,7 +15,7 @@ import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 export class ChatContentLeftComponent {
 
   @Input()
-  message;
+  message: ChatMessage;
 
   constructor() {
 
