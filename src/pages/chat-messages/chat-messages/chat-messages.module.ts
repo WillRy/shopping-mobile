@@ -6,6 +6,7 @@ import { ChatAvatarComponent } from './../chat-avatar/chat-avatar';
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { ChatMessagesPage } from './chat-messages';
+import { MomentModule } from 'ngx-moment';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { ChatMessagesPage } from './chat-messages';
   ],
   imports: [
     IonicPageModule.forChild(ChatMessagesPage),
+    MomentModule
   ],
 })
 export class ChatMessagesPageModule {}
