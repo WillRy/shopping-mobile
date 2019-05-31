@@ -50,7 +50,7 @@ chat-content-detail {
     border-left-color: $chat-content-right;
     border-right: 0;
     margin-right: -20px;
-    z-index: 11;
+    z-index: 99999;
   }
 
   .chat-content-datetime {
