@@ -7,6 +7,7 @@ import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { ChatMessagesPage } from './chat-messages';
 import { MomentModule } from 'ngx-moment';
+import { PipesModule } from '../../../pipes/pipes.module';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { MomentModule } from 'ngx-moment';
   ],
   imports: [
     IonicPageModule.forChild(ChatMessagesPage),
-    MomentModule
+    MomentModule,
+    PipesModule
   ],
 })
 export class ChatMessagesPageModule {}
