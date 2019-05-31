@@ -20,6 +20,7 @@ import { AuthProvider } from '../providers/auth/auth';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CustomerHttpProvider } from '../providers/http/customer-http';
 import { ChatGroupListComponent } from '../components/chat-group-list/chat-group-list';
+import { ChatMessagesPageModule } from '../pages/chat-messages/chat-messages/chat-messages.module';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,7 @@ import { ChatGroupListComponent } from '../components/chat-group-list/chat-group
     IonicModule.forRoot(MyApp),
     HttpClientModule,
     ReactiveFormsModule,
-    SuperTabsModule.forRoot()
+    SuperTabsModule.forRoot(),
   ],
   bootstrap: [IonicApp],
   entryComponents: [
