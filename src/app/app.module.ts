@@ -20,6 +20,7 @@ import { AuthProvider } from '../providers/auth/auth';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CustomerHttpProvider } from '../providers/http/customer-http';
 import { ChatGroupListComponent } from '../components/chat-group-list/chat-group-list';
+import { ChatMessageHttpProvider } from '../providers/http/chat-messag-http';
 
 function jwtFactory(authProvider: AuthProvider) {
   return {
@@ -76,7 +77,8 @@ function jwtFactory(authProvider: AuthProvider) {
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     FirebaseAuthProvider,
     AuthProvider,
-    CustomerHttpProvider
+    CustomerHttpProvider,
+    ChatMessageHttpProvider
   ]
 })
 export class AppModule {}
