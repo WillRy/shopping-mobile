@@ -67,4 +67,12 @@ export class ChatFooterComponent {
     inputFile.click();
   }
 
+  getIconSendMessage() {
+    if(this.messageType === 'text'){
+      return this.text === '' ? 'mic' : 'send';
+    }
+
+    return 'mic';
+  }
+
 }
