@@ -5,6 +5,8 @@ import {
   Injectable
 } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import {environment} from '@app/env';
+
 
 @Injectable()
 export class ChatMessageHttpProvider {
@@ -16,7 +18,7 @@ export class ChatMessageHttpProvider {
     const formData = new FormData();
     formData.append('content', data.content);
     formData.append('type', data.type);
-    return this.http.post(`http://localhost:8000/api/chat_groups/${chatGroupId}/messages`, formData);
+    return this.http.post(`${environment.api.url}/chat_groups/${chatGroupId}/messages`, formData);
   }
 
 }

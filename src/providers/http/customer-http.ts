@@ -8,6 +8,7 @@ import { FirebaseAuthProvider } from '../auth/firebase-auth';
 import { fromPromise } from 'rxjs/Observable/fromPromise';
 import { flatMap } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
+import {environment} from '@app/env';
 
 interface Customer {
   name: string;
@@ -27,7 +28,7 @@ export class CustomerHttpProvider {
     .pipe(
       flatMap(token => {
         formData.append('token',token);
-        return this.http.post<{token:string}>('http://localhost:8000/api/customers', formData)
+        return this.http.post<{token:string}>(`${environment.api.url}/customers`, formData)
       })
     )
   }
@@ -48,7 +49,7 @@ export class CustomerHttpProvider {
     .pipe(
       flatMap(token => {
 
-        return this.http.post<any>('http://localhost:8000/api/customers/phone_numbers', {
+        return this.http.post<any>(`${environment.api.url}/customers/phone_numbers`, {
           email, token
         })
       })
