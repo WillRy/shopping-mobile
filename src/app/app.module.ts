@@ -21,6 +21,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CustomerHttpProvider } from '../providers/http/customer-http';
 import { ChatGroupListComponent } from '../components/chat-group-list/chat-group-list';
 import { ChatMessageHttpProvider } from '../providers/http/chat-messag-http';
+import {environment} from '@app/env';
 
 function jwtFactory(authProvider: AuthProvider) {
   return {
@@ -28,7 +29,7 @@ function jwtFactory(authProvider: AuthProvider) {
       return authProvider.getToken();
     },
     whitelistedDomains: [
-      new RegExp('localhost:8000/*')
+      new RegExp(`${environment.api.host}`)
     ]
   };
 }
