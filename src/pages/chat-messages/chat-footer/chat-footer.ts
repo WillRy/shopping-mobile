@@ -8,7 +8,7 @@ import {
 import {
   TextInput
 } from 'ionic-angular';
-
+import Timer from 'easytimer.js/dist/easytimer.min'
 
 /**
  * Generated class for the ChatFooterComponent component.
@@ -24,13 +24,30 @@ export class ChatFooterComponent {
 
   text: string = '';
   messageType = 'text';
-
+  timer = new Timer();
 
   @ViewChild('inputFileImage')
   inputFileImage: TextInput;
 
   constructor(private chatMessageHttp: ChatMessageHttpProvider) {
 
+  }
+
+  holdAudioButton() {
+    this.timer.start({precision:'seconds'});
+    this.timer.addEventListener('secondsUpdated',(e) => {
+      const time = this.getMinuteSeconds();
+      this.text = `${time} - Gravando...`
+    });
+  }
+
+  releaseAudioButton() {
+    this.timer.stop();
+    this.text = '';
+  }
+
+  private getMinuteSeconds(){
+    return this.timer.getTimeValues().toString().substring(3);
   }
 
   sendMessage(data: {
@@ -55,6 +72,9 @@ export class ChatFooterComponent {
   }
 
   sendMessageText() {
+    if (!this.text.length) {
+      return;
+  }
     this.sendMessage({
       content: this.text,
       type: 'text'

@@ -8,6 +8,7 @@ import { IonicPageModule } from 'ionic-angular';
 import { ChatMessagesPage } from './chat-messages';
 import { MomentModule } from 'ngx-moment';
 import { PipesModule } from '../../../pipes/pipes.module';
+import {LongPressModule} from "ionic-long-press";
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { PipesModule } from '../../../pipes/pipes.module';
   imports: [
     IonicPageModule.forChild(ChatMessagesPage),
     MomentModule,
-    PipesModule
+    PipesModule,
+    LongPressModule
   ],
 })
 export class ChatMessagesPageModule {}
