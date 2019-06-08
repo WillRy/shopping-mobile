@@ -22,6 +22,9 @@ import { CustomerHttpProvider } from '../providers/http/customer-http';
 import { ChatGroupListComponent } from '../components/chat-group-list/chat-group-list';
 import { ChatMessageHttpProvider } from '../providers/http/chat-messag-http';
 import {environment} from '@app/env';
+import {Media} from "@ionic-native/media";
+import {File} from '@ionic-native/file';
+
 
 function jwtFactory(authProvider: AuthProvider) {
   return {
@@ -29,7 +32,8 @@ function jwtFactory(authProvider: AuthProvider) {
       return authProvider.getToken();
     },
     whitelistedDomains: [
-      new RegExp(`${environment.api.host}`)
+      new RegExp(`${environment.api.host}`),
+      new RegExp('http://localhost:8000')
     ]
   };
 }
@@ -79,7 +83,10 @@ function jwtFactory(authProvider: AuthProvider) {
     FirebaseAuthProvider,
     AuthProvider,
     CustomerHttpProvider,
-    ChatMessageHttpProvider
+    ChatMessageHttpProvider,
+    Media,
+    File,
+
   ]
 })
 export class AppModule {}

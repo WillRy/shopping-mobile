@@ -29,3 +29,9 @@ export interface UserProfile {
   has_photo: boolean;
   firebase_uid: string;
 }
+export interface AudioPlatformConfig {
+  basePath: string;
+  name: string;
+  mimeType: string;
+  fullPath: string;
+};
