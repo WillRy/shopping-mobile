@@ -1,14 +1,25 @@
 import {
-  ChatMessageHttpProvider
-} from './../../../providers/http/chat-messag-http';
-import {
   Component,
   ViewChild
 } from '@angular/core';
-import {
-  TextInput
-} from 'ionic-angular';
 
+import {
+  ItemSliding,
+  TextInput
+} from "ionic-angular";
+import Timer from 'easytimer.js/dist/easytimer.min';
+import {
+  AudioRecorderProvider
+} from "../../../providers/audio-recorder/audio-recorder";
+import {
+  Subject
+} from "rxjs/Subject";
+import {
+  debounceTime
+} from "rxjs/operators";
+import {
+  ChatMessageHttpProvider
+} from "../../../providers/http/chat-messag-http";
 
 /**
  * Generated class for the ChatFooterComponent component.
@@ -22,30 +33,97 @@ import {
 })
 export class ChatFooterComponent {
 
-  text: string = '';
-  messageType = 'text';
-
-
   @ViewChild('inputFileImage')
   inputFileImage: TextInput;
 
-  constructor(private chatMessageHttp: ChatMessageHttpProvider) {
+  @ViewChild('itemSliding')
+  itemSliding: ItemSliding;
 
+  subjectReleaseAudioButton = new Subject();
+
+  text: string = '';
+  messageType = 'text';
+  timer = new Timer();
+  recording = false;
+
+  constructor(private chatMessageHttp: ChatMessageHttpProvider,
+    private audioRecorder: AudioRecorderProvider) {}
+
+  ngOnInit() {
+    this.onStopRecord();
   }
 
-  sendMessage(data: {
-    content,
-    type
-  }) {
-    this.chatMessageHttp.create(1, data)
+  onDrag() {
+    if (this.itemSliding.getSlidingPercent() > 0.93) {
+      this.itemSliding.close();
+      this.clearRecording();
+      this.audioRecorder.stopRecord()
+        .then(
+          blob => console.log('stop recording...'),
+          error => console.log(error)
+        );
+    }
+  }
+
+  onStopRecord() {
+    this.subjectReleaseAudioButton
+      .pipe(debounceTime(500))
       .subscribe(() => {
-        console.log('enviou');
-      })
+        if (!this.recording) return;
+
+        if (this.itemSliding.getSlidingPercent() === 0) {
+          this.clearRecording();
+
+          this.audioRecorder.stopRecord()
+            .then(
+              blob => this.sendMessageAudio(blob),
+              error => console.log(error)
+            );
+        }
+      });
+  }
+
+  clearRecording() {
+    this.timer.stop();
+    this.text = '';
+    this.recording = false;
+  }
+
+  holdAudioButton() {
+
+    this.recording = true;
+    this.audioRecorder.startRecord();
+    this.timer.start({
+      precision: 'seconds'
+    });
+    this.timer.addEventListener('secondsUpdated', (e) => {
+      const time = this.getMinuteSeconds();
+
+      this.text = `${time} Gravando...`;
+    });
+  }
+
+  private getMinuteSeconds() {
+    return this.timer.getTimeValues().toString().substring(3);
+  }
+
+  releaseAudioButton() {
+    this.subjectReleaseAudioButton.next();
+  }
+
+  sendMessageText() {
+    if (!this.text.length) {
+      return;
+    }
+
+    this.sendMessage({
+      content: this.text,
+      type: 'text'
+    });
   }
 
   sendMessageImage(files: FileList) {
-
-    if (!files) {
+    if (!files.length) {
       return;
     }
     this.sendMessage({
@@ -54,17 +132,36 @@ export class ChatFooterComponent {
     });
   }
 
-  sendMessageText() {
+  sendMessageAudio(blob: Blob) {
     this.sendMessage({
-      content: this.text,
-      type: 'text'
+      content: blob,
+      type: 'audio'
     });
   }
 
+
+  sendMessage(data: {
+    content,
+    type
+  }) {
+    this.chatMessageHttp
+      .create(1, {
+        type: data.type,
+        content: data.content
+      })
+      .subscribe(() => console.log('enviou'));
+  }
+
   selectImage() {
-    const nativeElement = this.inputFileImage.getElementRef().nativeElement;
+    const nativeElement: HTMLElement = this.inputFileImage.getElementRef().nativeElement;
     const inputFile = nativeElement.querySelector('input');
     inputFile.click();
   }
 
+  getIconSendMessage() {
+    if (this.messageType === 'text') {
+      return this.text === '' ? 'mic' : 'send';
+    }
+    return 'mic';
+  }
 }
