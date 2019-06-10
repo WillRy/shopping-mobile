@@ -1,4 +1,6 @@
-import { ChatMessage } from './../../app/model';
+import {
+  ChatMessage
+} from './../../app/model';
 import {
   ChatGroupFbProvider
 } from './../../providers/firebase/chat-group-fb';
@@ -11,7 +13,9 @@ import {
 import {
   ChatGroup
 } from '../../app/model';
-import { AuthProvider } from '../../providers/auth/auth';
+import {
+  AuthProvider
+} from '../../providers/auth/auth';
 
 
 /**
@@ -31,9 +35,9 @@ export class ChatGroupListComponent {
   constructor(
     private firebaseAuth: FirebaseAuthProvider,
     private chatGroupFb: ChatGroupFbProvider,
-    private auth: AuthProvider
+
   ) {
-    console.log(this.auth.me  );
+
   }
 
   ngOnInit() {
@@ -41,21 +45,23 @@ export class ChatGroupListComponent {
       this.groups = groups;
     });
 
+    this.chatGroupFb.onAdded().subscribe((group) => {
+      this.groups.unshift(group);
+    });
 
-    // const database = this.firebaseAuth.firebase.database();
+    this.chatGroupFb.onChanged().subscribe((group) => {
+      const index = this.groups.findIndex(g => g.id === group.id);
+      if(index === -1){
+        return
+      };
 
-
-    // database.ref('chat_groups').on('child_changed', (data) => {
-    //   const group = data.val() as ChatGroup;
-    //   const index = this.groups.findIndex((g) => g.id === group.id);
-    //   if (index != -1) {
-    //     this.groups[index] = group;
-    //   }
-    // });
+      this.groups.splice(index,1);
+      this.groups.unshift(group);
+    });
   }
 
-  formatTextMessage(message: ChatMessage){
-    return message.content.length > 15 ? message.content.slice(0,15)+'...' : message.content
+  formatTextMessage(message: ChatMessage) {
+    return message.content.length > 15 ? message.content.slice(0, 15) + '...' : message.content
   }
 
 }
