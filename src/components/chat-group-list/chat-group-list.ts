@@ -1,6 +1,16 @@
-import { FirebaseAuthProvider } from './../../providers/auth/firebase-auth';
-import { Component } from '@angular/core';
-import { ChatGroup } from '../../app/model';
+import {
+  ChatGroupFbProvider
+} from './../../providers/firebase/chat-group-fb';
+import {
+  FirebaseAuthProvider
+} from './../../providers/auth/firebase-auth';
+import {
+  Component
+} from '@angular/core';
+import {
+  ChatGroup
+} from '../../app/model';
+import { AuthProvider } from '../../providers/auth/auth';
 
 
 /**
@@ -17,24 +27,31 @@ export class ChatGroupListComponent {
 
   groups: ChatGroup[] = [];
 
-  constructor(private firebaseAuth: FirebaseAuthProvider) {
-
+  constructor(
+    private firebaseAuth: FirebaseAuthProvider,
+    private chatGroupFb: ChatGroupFbProvider,
+    private auth: AuthProvider
+  ) {
+    console.log(this.auth.me  );
   }
 
   ngOnInit() {
-    const database = this.firebaseAuth.firebase.database();
-    database.ref('chat_groups').on('child_added', (data) => {
-      const group = data.val() as ChatGroup;
-      this.groups.push(group);
+    this.chatGroupFb.list().subscribe((groups) => {
+      this.groups = groups;
+      console.log(groups);
     });
 
-    database.ref('chat_groups').on('child_changed', (data) => {
-      const group = data.val() as ChatGroup;
-      const index = this.groups.findIndex((g) => g.id === group.id);
-      if (index != -1) {
-        this.groups[index] = group;
-      }
-    });
+
+    // const database = this.firebaseAuth.firebase.database();
+
+
+    // database.ref('chat_groups').on('child_changed', (data) => {
+    //   const group = data.val() as ChatGroup;
+    //   const index = this.groups.findIndex((g) => g.id === group.id);
+    //   if (index != -1) {
+    //     this.groups[index] = group;
+    //   }
+    // });
   }
 
 }

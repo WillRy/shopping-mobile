@@ -35,48 +35,37 @@ import {
 })
 export class LoginPhoneNumberPage {
 
-  loader;
 
-  constructor(
-    public navCtrl: NavController,
-    public navParams: NavParams,
+
+  constructor(public navCtrl: NavController, public navParams: NavParams,
     private firebaseAuth: FirebaseAuthProvider,
-    private authService: AuthProvider,
-    public loadingCtrl: LoadingController
-  ) {
-
-  }
+    private authService: AuthProvider) {}
 
 
 
   ionViewDidLoad() {
-
     const unsubscribed = this.firebaseAuth.firebase.auth().onAuthStateChanged((user) => {
-
       if (user) {
-        this.handleAuthUser();
+        this.handleAuthuser();
         unsubscribed();
       }
     });
-
     this.firebaseAuth.makePhoneNumberForm('#firebase-ui');
   }
 
-  handleAuthUser() {
+  handleAuthuser() {
     this.authService
       .login()
-      .subscribe((token) => {
-        this.redirectToMainPage();
-      }, (responseError) => {
-        console.log('entrou no erro');
-        this.firebaseAuth
-          .makePhoneNumberForm('#firebase-ui')
-          .then(() => {
-            console.log('entrou no retorno');
-            this.handleAuthUser()
-          });
-        this.redirectToCustomerCreatePage();
-      });
+      .subscribe(
+        (token) => {
+          this.redirectToMainPage();
+        },
+        (responseError) => {
+          this.firebaseAuth
+            .makePhoneNumberForm('#firebase-ui')
+            .then(() => this.handleAuthuser());
+          this.redirectToCustomerCreatePage();
+        });
   }
 
   redirectToMainPage() {
@@ -86,19 +75,5 @@ export class LoginPhoneNumberPage {
   redirectToCustomerCreatePage() {
     this.navCtrl.push(CustomerCreatePage);
   }
-
-  showLoading() {
-    this.loader = this.loadingCtrl.create({
-      content: "Por favor, aguarde!"
-    });
-    this.loader.present();
-  }
-
-  dismissLoading() {
-    if (this.loader) {
-      this.loader.dismiss();
-    }
-  }
-
 
 }
