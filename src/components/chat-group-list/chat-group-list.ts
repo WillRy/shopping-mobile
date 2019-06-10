@@ -1,3 +1,4 @@
+import { ChatMessage } from './../../app/model';
 import {
   ChatGroupFbProvider
 } from './../../providers/firebase/chat-group-fb';
@@ -38,7 +39,6 @@ export class ChatGroupListComponent {
   ngOnInit() {
     this.chatGroupFb.list().subscribe((groups) => {
       this.groups = groups;
-      console.log(groups);
     });
 
 
@@ -52,6 +52,10 @@ export class ChatGroupListComponent {
     //     this.groups[index] = group;
     //   }
     // });
+  }
+
+  formatTextMessage(message: ChatMessage){
+    return message.content.length > 15 ? message.content.slice(0,15)+'...' : message.content
   }
 
 }
