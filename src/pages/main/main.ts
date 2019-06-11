@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ChatGroupListComponent } from '../../components/chat-group-list/chat-group-list';
 import { SuperTabsModule } from 'ionic2-super-tabs';
+import { AuthProvider } from '../../providers/auth/auth';
 /**
  * Generated class for the MainPage page.
  *
@@ -23,6 +24,7 @@ export class MainPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MainPage');
+
   }
 
 }

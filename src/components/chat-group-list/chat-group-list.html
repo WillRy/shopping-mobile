@@ -1,11 +1,17 @@
 <ion-content>
   <ion-list>
-    <ion-item *ngFor="let group of groups">
+    <ion-item *ngFor="let group of groups" [hidden]="!(group.is_member|async)">
       <ion-avatar item-start>
         <img src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&amp;f=y" alt="">
       </ion-avatar>
       <h2>{{group.name}}</h2>
-      <h3>Quais são as caracteristicas do produto?</h3>
+      <h3>
+        <ng-container *ngIf="group?.last_message|async as message">
+          <span *ngIf="message.type === 'text'">{{message?.user.name}}:{{formatTextMessage(message)}}</span>
+          <span *ngIf="message.type === 'audio'"><ion-icon name="mic"></ion-icon>Audio</span>
+          <span *ngIf="message.type === 'image'"><ion-icon name="images"></ion-icon>Imagem</span>
+        </ng-container>
+      </h3>
     </ion-item>
   </ion-list>
 </ion-content>

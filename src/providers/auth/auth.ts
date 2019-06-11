@@ -6,6 +6,7 @@ import {fromPromise} from 'rxjs/Observable/fromPromise'
 import { flatMap, tap } from 'rxjs/operators'
 import { User } from '../../app/model';
 import {JwtHelperService} from '@auth0/angular-jwt';
+import {environment} from '@app/env';
 
 const TOKEN_KEY = 'code_shopping_token';
 
@@ -19,14 +20,20 @@ export class AuthProvider {
     this.setUserFromToken(token);
   }
 
-   login(): Observable<{token:string}> {
+  login(): Observable<{ token: string }> {
     return fromPromise(this.firebaseAuth.getToken())
-    .pipe(
-      flatMap(token => {
-        return this.http.post<{token:string}>('http://localhost:8000/api/login_vendor', {token})
-      })
-    )
-  }
+        .pipe(
+            flatMap(token => {
+                return this.http
+                    .post<{ token: string }>(`${environment.api.url}/login_vendor`, {token})
+                    .pipe(
+                        tap(data => {
+                            this.setToken(data.token);
+                        })
+                    );
+            })
+        );
+}
 
   setToken(token: string) {
     this.setUserFromToken(token);
@@ -43,7 +50,7 @@ export class AuthProvider {
   }
 
   logout(): Observable< any > {
-    return this.http.post(`http://localhost:8000/api/logout`, {})
+    return this.http.post(`${environment.api.url}/logout`, {})
     .pipe(
       tap(() => {
         this.setToken(null);
@@ -57,6 +64,7 @@ export class AuthProvider {
       id: decodedPayload.sub,
       name: decodedPayload.name,
       email: decodedPayload.email,
+      role: decodedPayload.role,
       profile: decodedPayload.profile
     } : null;
   }

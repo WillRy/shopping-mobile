@@ -83,37 +83,37 @@ export class FirebaseAuthProvider {
 
   }
 
-   getUser(): Promise < firebase.User | null > {
+  getUser(): Promise<firebase.User | null> {
     const currentUser = this.getCurrentUser();
     if (currentUser) {
-      return Promise.resolve(currentUser);
+        return Promise.resolve(currentUser);
     }
+
     return new Promise((resolve, reject) => {
-      const unsubscribe = this.firebase.auth().onAuthStateChanged(
-        (user) => {
-          resolve(user);
-          unsubscribe();
-        },
-        (error) => {
-          reject(error);
-          unsubscribe();
-        });
+        const unsubscribed = this.firebase.auth().onAuthStateChanged(
+            (user) => {
+                resolve(user);
+                unsubscribed();
+            }, (error) => {
+                reject(error);
+                unsubscribed();
+            }
+        )
     });
-  }
+}
 
-  async getToken(): Promise <any> {
+  async getToken(): Promise<string> {
     try {
-      const user = await this.getUser();
-      if(!user) {
-        throw new Error('User not found');
-      }
-      const token = await user.getIdTokenResult();
-
-      return token.token;
+        const user = await this.getUser();
+        if (!user) {
+            throw new Error('User not found');
+        }
+        const token = await user.getIdTokenResult();
+        return token.token;
     } catch (e) {
-      return Promise.reject(e);
+        return Promise.reject(e);
     }
-  }
+}
 
   getCurrentUser(): firebase.User | null {
     return this.firebase.auth().currentUser;
