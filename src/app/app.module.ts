@@ -25,6 +25,7 @@ import {environment} from '@app/env';
 import {Media} from "@ionic-native/media";
 import {File} from '@ionic-native/file';
 import { ChatGroupFbProvider } from '../providers/firebase/chat-group-fb';
+import { PipesModule } from '../pipes/pipes.module';
 
 
 function jwtFactory(authProvider: AuthProvider) {
@@ -64,6 +65,7 @@ function jwtFactory(authProvider: AuthProvider) {
         deps: [AuthProvider]
       }
     }),
+    PipesModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
