@@ -1,3 +1,4 @@
+import { IsCurrentUserPipe } from './../../../pipes/is-current-user/is-current-user';
 import {
   ChatGMessageFbProvider
 } from './../../../providers/firebase/chat-message-fb';
@@ -41,6 +42,7 @@ export class ChatMessagesPage {
   limit = 20;
   showContent = false;
   canMoreMessages = true;
+  countNewMessages = 0;
 
   @ViewChild(Content)
   content: Content;
@@ -49,7 +51,8 @@ export class ChatMessagesPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     private firebaseAuth: FirebaseAuthProvider,
-    private chatMessageFb: ChatGMessageFbProvider
+    private chatMessageFb: ChatGMessageFbProvider,
+    private isCurrentUser: IsCurrentUserPipe
   ) {
     // this.chatGroup = this.navParams.get('chat_group');
     this.chatGroup = {
@@ -65,7 +68,7 @@ export class ChatMessagesPage {
         this.messages = messages;
 
         setTimeout(() => {
-          this.content.scrollToBottom(0);
+          this.scrollToBottom();
           this.showContent = true;
         }, 500);
       });
@@ -73,8 +76,15 @@ export class ChatMessagesPage {
       this.chatMessageFb.onAdded(this.chatGroup).subscribe(
         (message) => {
         this.messages.push(message);
-        },
-        (error) => console.log(error));
+        if (this.isCurrentUser.transform(message.value.user_id)) {
+            return;
+        }
+        this.countNewMessages++;
+
+      },
+      (error) => {
+        console.log(error);
+      });
   }
 
   doInfinite(infiniteScroll: InfiniteScroll) {
@@ -89,6 +99,20 @@ export class ChatMessagesPage {
         (error) => {
           infiniteScroll.complete();
         });
+  }
+
+  scrollToBottom() {
+    this.countNewMessages = 0;
+    this.content.scrollToBottom(0);
+  }
+
+  showButtonScrollBottom() {
+    const dimensions = this.content.getContentDimensions();
+    const contentHeight = dimensions.contentHeight;
+    const scrollTop = dimensions.scrollTop;
+    const scrollHeight = dimensions.scrollHeight;
+
+    return scrollHeight > scrollTop + contentHeight;
   }
 
 }
