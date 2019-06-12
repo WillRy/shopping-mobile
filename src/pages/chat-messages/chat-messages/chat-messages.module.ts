@@ -10,6 +10,7 @@ import { MomentModule } from 'ngx-moment';
 import { PipesModule } from '../../../pipes/pipes.module';
 import {LongPressModule} from "ionic-long-press";
 import {AudioRecorderProvider} from "../../../providers/audio-recorder/audio-recorder";
+import { ChatGMessageFbProvider } from '../../../providers/firebase/chat-message-fb';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import {AudioRecorderProvider} from "../../../providers/audio-recorder/audio-rec
     LongPressModule
   ],
   providers: [
-    AudioRecorderProvider
+    AudioRecorderProvider,
+    ChatGMessageFbProvider
   ]
 })
 export class ChatMessagesPageModule {}

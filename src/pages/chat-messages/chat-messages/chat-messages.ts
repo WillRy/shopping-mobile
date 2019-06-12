@@ -1,8 +1,26 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { FirebaseAuthProvider } from '../../../providers/auth/firebase-auth';
-import { ChatMessage } from '../../../app/model';
-import { Observable } from 'rxjs/Observable';
+import {
+  ChatGMessageFbProvider
+} from './../../../providers/firebase/chat-message-fb';
+import {
+  ChatGroup
+} from './../../../app/model';
+import {
+  Component
+} from '@angular/core';
+import {
+  IonicPage,
+  NavController,
+  NavParams
+} from 'ionic-angular';
+import {
+  FirebaseAuthProvider
+} from '../../../providers/auth/firebase-auth';
+import {
+  ChatMessage
+} from '../../../app/model';
+import {
+  Observable
+} from 'rxjs/Observable';
 
 @IonicPage()
 @Component({
@@ -12,28 +30,32 @@ import { Observable } from 'rxjs/Observable';
 
 export class ChatMessagesPage {
 
+  chatGroup: ChatGroup;
   messages: ChatMessage[] = [];
+  limit = 20;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private firebaseAuth: FirebaseAuthProvider
-    ) {
+    private firebaseAuth: FirebaseAuthProvider,
+    private chatMessageFb: ChatGMessageFbProvider
+  ) {
+    // this.chatGroup = this.navParams.get('chat_group');
+    this.chatGroup = {
+      id: 1,
+      name: 'string',
+      photo_url: 'string',
+    };
   }
 
   ionViewDidLoad() {
-    const database = this.firebaseAuth.firebase.database();
-
-    database.ref('chat_groups/1/messages').on('child_added', (data) => {
-      const message = data.val();
-      message.user = new Observable((observer) => {
-        database.ref(`users/${message.user_id}`).on('value', (data) => {
-          const user = data.val();
-          observer.next(user);
-        });
+    this.chatMessageFb.latest(this.chatGroup, this.limit).subscribe(
+      (messages) => {
+        this.messages = messages;
+      },
+      (error) => {
+        console.log(error);
       });
-      this.messages.push(message);
-    });
 
   }
 

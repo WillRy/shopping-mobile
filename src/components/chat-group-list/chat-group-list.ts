@@ -1,3 +1,4 @@
+import { ChatMessagesPage } from './../../pages/chat-messages/chat-messages/chat-messages';
 import {
   ChatMessage
 } from './../../app/model';
@@ -16,6 +17,7 @@ import {
 import {
   AuthProvider
 } from '../../providers/auth/auth';
+import { App } from 'ionic-angular';
 
 
 /**
@@ -35,6 +37,7 @@ export class ChatGroupListComponent {
   constructor(
     private firebaseAuth: FirebaseAuthProvider,
     private chatGroupFb: ChatGroupFbProvider,
+    private app: App
 
   ) {
 
@@ -64,4 +67,7 @@ export class ChatGroupListComponent {
     return message.content.length > 15 ? message.content.slice(0, 15) + '...' : message.content
   }
 
+  goToMessages(group: ChatGroup){
+    this.app.getRootNav().push('ChatMessagesPage', {'chat_group':group});
+  }
 }
