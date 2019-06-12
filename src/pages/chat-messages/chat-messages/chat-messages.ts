@@ -5,12 +5,15 @@ import {
   ChatGroup
 } from './../../../app/model';
 import {
-  Component
+  Component,
+  ViewChild
 } from '@angular/core';
 import {
   IonicPage,
   NavController,
-  NavParams
+  NavParams,
+  Content,
+  InfiniteScroll
 } from 'ionic-angular';
 import {
   FirebaseAuthProvider
@@ -31,8 +34,16 @@ import {
 export class ChatMessagesPage {
 
   chatGroup: ChatGroup;
-  messages: ChatMessage[] = [];
+  messages: {
+    key: string,
+    value: ChatMessage
+  } [] = [];
   limit = 20;
+  showContent = false;
+  canMoreMessages = true;
+
+  @ViewChild(Content)
+  content: Content;
 
   constructor(
     public navCtrl: NavController,
@@ -49,14 +60,35 @@ export class ChatMessagesPage {
   }
 
   ionViewDidLoad() {
-    this.chatMessageFb.latest(this.chatGroup, this.limit).subscribe(
-      (messages) => {
+    this.chatMessageFb.latest(this.chatGroup, this.limit)
+      .subscribe((messages) => {
         this.messages = messages;
-      },
-      (error) => {
-        console.log(error);
+
+        setTimeout(() => {
+          this.content.scrollToBottom(0);
+          this.showContent = true;
+        }, 500);
       });
 
+      this.chatMessageFb.onAdded(this.chatGroup).subscribe(
+        (message) => {
+        this.messages.push(message);
+        },
+        (error) => console.log(error));
+  }
+
+  doInfinite(infiniteScroll: InfiniteScroll) {
+    this.chatMessageFb.oldest(this.chatGroup, this.limit, this.messages[0].key)
+      .subscribe((messages) => {
+          if (!messages.length) {
+            this.canMoreMessages = false;
+          }
+          this.messages.unshift(...messages);
+          infiniteScroll.complete();
+        },
+        (error) => {
+          infiniteScroll.complete();
+        });
   }
 
 }
