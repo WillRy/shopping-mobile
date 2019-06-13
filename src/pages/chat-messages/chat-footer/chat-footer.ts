@@ -45,6 +45,7 @@ export class ChatFooterComponent {
   messageType = 'text';
   timer = new Timer();
   recording = false;
+  sending = false;
 
   constructor(private chatMessageHttp: ChatMessageHttpProvider,
     private audioRecorder: AudioRecorderProvider) {}
@@ -144,12 +145,22 @@ export class ChatFooterComponent {
     content,
     type
   }) {
+    this.sending = true;
     this.chatMessageHttp
       .create(1, {
         type: data.type,
         content: data.content
       })
-      .subscribe(() => console.log('enviou'));
+      .subscribe(() => {
+        this.sending = false;
+        if(data.type === 'text'){
+          this.text = '';
+        }
+        console.log('enviou');
+      },
+      (error) => {
+        this.sending = false;
+      });
   }
 
   selectImage() {

@@ -27,6 +27,7 @@ import {File} from '@ionic-native/file';
 import { ChatGroupFbProvider } from '../providers/firebase/chat-group-fb';
 import { PipesModule } from '../pipes/pipes.module';
 import { ChatGroupViewerProvider } from '../providers/chat-group-viewer/chat-group-viewer';
+import { DirectivesModule } from '../directives/directives.module';
 
 
 function jwtFactory(authProvider: AuthProvider) {
@@ -66,7 +67,8 @@ function jwtFactory(authProvider: AuthProvider) {
         deps: [AuthProvider]
       }
     }),
-    PipesModule
+    PipesModule,
+    DirectivesModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

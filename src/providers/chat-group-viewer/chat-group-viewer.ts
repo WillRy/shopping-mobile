@@ -46,7 +46,7 @@ export class ChatGroupViewerProvider {
   private hasViewed(group: ChatGroup): Observable < boolean > {
     return Observable.create(observer => {
       let collection = this.collection;
-      if (collection.hasOwnProperty(group.id) && collection[group.id].viewed === true) {
+      if (collection.hasOwnProperty(group.id)) {
         group.last_message.subscribe((message) => {
           collection = this.collection;
           const hasViewed = this.isCurrentUser.transform(message.user_id) ||

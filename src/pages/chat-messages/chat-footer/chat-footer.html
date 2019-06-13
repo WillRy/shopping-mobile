@@ -15,7 +15,7 @@
                       <button ion-button class="btn-send-message"
                       ion-long-press [interval]="1000 * 60 * 5"
                       (onPressStart)="holdAudioButton()" (onPressEnd)="releaseAudioButton()"
-                      (click)="sendMessageText()">
+                      (click)="sendMessageText()" [disabled]="sending">
                             <ion-icon [name]="getIconSendMessage()"></ion-icon>
                         </button>
                     </ion-col>
