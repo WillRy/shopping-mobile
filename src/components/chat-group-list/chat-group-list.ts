@@ -1,3 +1,4 @@
+import { ChatGroupViewerProvider } from './../../providers/chat-group-viewer/chat-group-viewer';
 import { ChatMessagesPage } from './../../pages/chat-messages/chat-messages/chat-messages';
 import {
   ChatMessage
@@ -37,7 +38,8 @@ export class ChatGroupListComponent {
   constructor(
     private firebaseAuth: FirebaseAuthProvider,
     private chatGroupFb: ChatGroupFbProvider,
-    private app: App
+    private app: App,
+    private chatGroupViewer: ChatGroupViewerProvider
 
   ) {
 
@@ -45,10 +47,14 @@ export class ChatGroupListComponent {
 
   ngOnInit() {
     this.chatGroupFb.list().subscribe((groups) => {
+      groups.forEach(group => {
+        this.chatGroupViewer.loadViewed(group);
+      })
       this.groups = groups;
     });
 
     this.chatGroupFb.onAdded().subscribe((group) => {
+      this.chatGroupViewer.loadViewed(group);
       this.groups.unshift(group);
     });
 
@@ -57,7 +63,7 @@ export class ChatGroupListComponent {
       if(index === -1){
         return
       };
-
+      this.chatGroupViewer.loadViewed(group);
       this.groups.splice(index,1);
       this.groups.unshift(group);
     });
@@ -68,6 +74,7 @@ export class ChatGroupListComponent {
   }
 
   goToMessages(group: ChatGroup){
+    this.chatGroupViewer.viewed(group);
     this.app.getRootNav().push('ChatMessagesPage', {'chat_group':group});
   }
 }

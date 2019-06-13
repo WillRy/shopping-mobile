@@ -8,6 +8,7 @@ export interface ChatGroup {
   readonly photo_url: string;
   is_member?: Observable < boolean > ;
   last_message?: Observable < ChatMessage > ;
+  viewed?: boolean;
   readonly created_at ? : {
     date: string
   };

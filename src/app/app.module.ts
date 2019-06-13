@@ -26,6 +26,7 @@ import {Media} from "@ionic-native/media";
 import {File} from '@ionic-native/file';
 import { ChatGroupFbProvider } from '../providers/firebase/chat-group-fb';
 import { PipesModule } from '../pipes/pipes.module';
+import { ChatGroupViewerProvider } from '../providers/chat-group-viewer/chat-group-viewer';
 
 
 function jwtFactory(authProvider: AuthProvider) {
@@ -89,7 +90,8 @@ function jwtFactory(authProvider: AuthProvider) {
     ChatMessageHttpProvider,
     Media,
     File,
-    ChatGroupFbProvider
+    ChatGroupFbProvider,
+    ChatGroupViewerProvider
   ]
 })
 export class AppModule {}
