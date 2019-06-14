@@ -28,7 +28,9 @@ import { ChatGroupFbProvider } from '../providers/firebase/chat-group-fb';
 import { PipesModule } from '../pipes/pipes.module';
 import { ChatGroupViewerProvider } from '../providers/chat-group-viewer/chat-group-viewer';
 import { DirectivesModule } from '../directives/directives.module';
-
+import { StoragePermissionProvider } from '../providers/storage-permission/storage-permission';
+import { Diagnostic } from '@ionic-native/diagnostic';
+import { AudioRecorderProvider } from '../providers/audio-recorder/audio-recorder';
 
 function jwtFactory(authProvider: AuthProvider) {
   return {
@@ -93,7 +95,10 @@ function jwtFactory(authProvider: AuthProvider) {
     Media,
     File,
     ChatGroupFbProvider,
-    ChatGroupViewerProvider
+    ChatGroupViewerProvider,
+    StoragePermissionProvider,
+    AudioRecorderProvider,
+    Diagnostic
   ]
 })
 export class AppModule {}

@@ -1,3 +1,5 @@
+import { AudioRecorderProvider } from '../../providers/audio-recorder/audio-recorder';
+import { StoragePermissionProvider } from '../../providers/storage-permission/storage-permission';
 import {
   Component
 } from '@angular/core';
@@ -9,12 +11,6 @@ import {
 import {
   ChatGroupListComponent
 } from '../../components/chat-group-list/chat-group-list';
-import {
-  SuperTabsModule
-} from 'ionic2-super-tabs';
-import {
-  AuthProvider
-} from '../../providers/auth/auth';
 /**
  * Generated class for the MainPage page.
  *
@@ -33,12 +29,15 @@ export class MainPage {
 
   constructor(
     public navCtrl: NavController,
-    public navParams: NavParams
+    public navParams: NavParams,
+    private storagePermission: StoragePermissionProvider,
+    private audioRecorder: AudioRecorderProvider
   ) {}
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad MainPage');
-
+    this.audioRecorder.requestPermission().then((result) => {
+      console.log(result);
+    });
   }
 
 }
