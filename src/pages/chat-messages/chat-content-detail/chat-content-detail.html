@@ -5,7 +5,7 @@
   <span *ngIf="message.type==='text'">{{message.content}}</span>
   <ion-card *ngIf="message.type === 'image'">
     <ion-row>
-      <img [src]="message.content | buildUrl">
+      <img [src]="message.content | buildUrl" (click)="showImage(message)">
     </ion-row>
   </ion-card>
 

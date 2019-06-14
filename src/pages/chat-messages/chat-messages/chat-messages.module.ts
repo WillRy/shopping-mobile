@@ -11,6 +11,7 @@ import { PipesModule } from '../../../pipes/pipes.module';
 import {LongPressModule} from "ionic-long-press";
 import {AudioRecorderProvider} from "../../../providers/audio-recorder/audio-recorder";
 import { ChatGMessageFbProvider } from '../../../providers/firebase/chat-message-fb';
+import { PhotoViewer } from '@ionic-native/photo-viewer';
 
 @NgModule({
   declarations: [
@@ -25,11 +26,12 @@ import { ChatGMessageFbProvider } from '../../../providers/firebase/chat-message
     IonicPageModule.forChild(ChatMessagesPage),
     MomentModule,
     PipesModule,
-    LongPressModule
+    LongPressModule,
   ],
   providers: [
     AudioRecorderProvider,
-    ChatGMessageFbProvider
+    ChatGMessageFbProvider,
+    PhotoViewer
   ]
 })
 export class ChatMessagesPageModule {}
