@@ -1,3 +1,5 @@
+import { BuildUrlPipe } from '../../../pipes/build-url/build-url';
+import { PhotoViewer } from '@ionic-native/photo-viewer';
 import { Component, Input } from '@angular/core';
 import { ChatMessage } from '../../../app/model';
 
@@ -16,8 +18,13 @@ export class ChatContentDetailComponent {
   @Input()
   message: ChatMessage;
 
-  constructor() {
+  constructor(private photoViewer: PhotoViewer, private buildUrl: BuildUrlPipe) {
 
+  }
+
+  showImage(message: ChatMessage){
+    const url = this.buildUrl.transform(message.content);
+    this.photoViewer.show(url);
   }
 
 }

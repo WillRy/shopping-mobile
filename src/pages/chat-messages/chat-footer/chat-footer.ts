@@ -5,7 +5,8 @@ import {
 
 import {
   ItemSliding,
-  TextInput
+  TextInput,
+  AlertController
 } from "ionic-angular";
 import Timer from 'easytimer.js/dist/easytimer.min';
 import {
@@ -45,9 +46,13 @@ export class ChatFooterComponent {
   messageType = 'text';
   timer = new Timer();
   recording = false;
+  sending = false;
 
-  constructor(private chatMessageHttp: ChatMessageHttpProvider,
-    private audioRecorder: AudioRecorderProvider) {}
+  constructor(
+    private chatMessageHttp: ChatMessageHttpProvider,
+    private audioRecorder: AudioRecorderProvider,
+    private alertCtrl: AlertController
+    ) {}
 
   ngOnInit() {
     this.onStopRecord();
@@ -90,7 +95,10 @@ export class ChatFooterComponent {
   }
 
   holdAudioButton() {
-
+    if(!this.audioRecorder.hasPermission){
+      this.showAlertPermission();
+      return;
+    }
     this.recording = true;
     this.audioRecorder.startRecord();
     this.timer.start({
@@ -101,6 +109,29 @@ export class ChatFooterComponent {
 
       this.text = `${time} Gravando...`;
     });
+  }
+
+  showAlertPermission(){
+    let alert = this.alertCtrl.create({
+      title: 'Aviso',
+      message: 'No momento, você não tem permissões para gravar audios. Deseja Ativar?',
+      buttons: [
+        {
+          text: 'Ok',
+          handler: () => {
+            this.audioRecorder.requestPermission().then((result) => {
+              if(result){
+                this.audioRecorder.showAlertToCloseApp();
+              }
+            });
+          }
+        },
+        {
+          text: 'Cancel'
+        }
+      ]
+    });
+    alert.present();
   }
 
   private getMinuteSeconds() {
@@ -144,12 +175,22 @@ export class ChatFooterComponent {
     content,
     type
   }) {
+    this.sending = true;
     this.chatMessageHttp
       .create(1, {
         type: data.type,
         content: data.content
       })
-      .subscribe(() => console.log('enviou'));
+      .subscribe(() => {
+        this.sending = false;
+        if(data.type === 'text'){
+          this.text = '';
+        }
+        console.log('enviou');
+      },
+      (error) => {
+        this.sending = false;
+      });
   }
 
   selectImage() {

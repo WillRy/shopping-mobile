@@ -1,3 +1,5 @@
+import { ChatGroupViewerProvider } from './../../providers/chat-group-viewer/chat-group-viewer';
+import { ChatMessagesPage } from './../../pages/chat-messages/chat-messages/chat-messages';
 import {
   ChatMessage
 } from './../../app/model';
@@ -16,6 +18,7 @@ import {
 import {
   AuthProvider
 } from '../../providers/auth/auth';
+import { App } from 'ionic-angular';
 
 
 /**
@@ -31,10 +34,13 @@ import {
 export class ChatGroupListComponent {
 
   groups: ChatGroup[] = [];
+  chatActive;
 
   constructor(
     private firebaseAuth: FirebaseAuthProvider,
     private chatGroupFb: ChatGroupFbProvider,
+    private app: App,
+    private chatGroupViewer: ChatGroupViewerProvider
 
   ) {
 
@@ -42,10 +48,14 @@ export class ChatGroupListComponent {
 
   ngOnInit() {
     this.chatGroupFb.list().subscribe((groups) => {
+      groups.forEach(group => {
+        this.chatGroupViewer.loadViewed(group);
+      })
       this.groups = groups;
     });
 
     this.chatGroupFb.onAdded().subscribe((group) => {
+      this.chatGroupViewer.loadViewed(group);
       this.groups.unshift(group);
     });
 
@@ -55,6 +65,11 @@ export class ChatGroupListComponent {
         return
       };
 
+      if(!this.chatActive || group.id !== this.chatActive.id){
+        this.chatGroupViewer.loadViewed(group);
+      }else{
+        this.chatGroupViewer.viewed(group);
+      }
       this.groups.splice(index,1);
       this.groups.unshift(group);
     });
@@ -64,4 +79,9 @@ export class ChatGroupListComponent {
     return message.content.length > 15 ? message.content.slice(0, 15) + '...' : message.content
   }
 
+  goToMessages(group: ChatGroup){
+    this.chatGroupViewer.viewed(group);
+    this.chatActive = group;
+    this.app.getRootNav().push('ChatMessagesPage', {'chat_group':group});
+  }
 }
