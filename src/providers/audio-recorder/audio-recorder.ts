@@ -1,5 +1,9 @@
-import { Diagnostic } from '@ionic-native/diagnostic';
-import { StoragePermissionProvider } from './../storage-permission/storage-permission';
+import {
+  Diagnostic
+} from '@ionic-native/diagnostic';
+import {
+  StoragePermissionProvider
+} from './../storage-permission/storage-permission';
 import {
   File
 } from '@ionic-native/file';
@@ -14,7 +18,8 @@ import {
   Injectable
 } from '@angular/core';
 import {
-  Platform
+  Platform,
+  AlertController
 } from 'ionic-angular';
 import {
   AudioPlatformConfig
@@ -35,15 +40,17 @@ export class AudioRecorderProvider {
     private file: File,
     private platform: Platform,
     private storagePermission: StoragePermissionProvider,
-    private diagnostic: Diagnostic) {
+    private diagnostic: Diagnostic,
+    private alertCtrl: AlertController
+  ) {
 
   }
 
-  async requestPermission(): Promise<boolean>{
-    if(!this.storagePermission.canWriteInStorage){
+  async requestPermission(): Promise < boolean > {
+    if (!this.storagePermission.canWriteInStorage) {
       await this.storagePermission.requestPermission();
     }
-    if(!this.canAccessMicrophone){
+    if (!this.canAccessMicrophone) {
       await this.platform.ready();
       const resultMicrophoneAuth = await this.diagnostic.requestMicrophoneAuthorization();
       this.canAccessMicrophone = resultMicrophoneAuth === 'GRANTED';
@@ -51,16 +58,16 @@ export class AudioRecorderProvider {
     return this.storagePermission.canWriteInStorage && this.canAccessMicrophone;
   }
 
-  get hasPermission(){
+  get hasPermission() {
     return this.storagePermission.canWriteInStorage && this.canAccessMicrophone;
   }
 
-  get canAccessMicrophone(): boolean{
+  private get canAccessMicrophone(): boolean {
     const canAccessMicrophone = window.localStorage.getItem(CAN_ACCESS_MICROPHONE);
     return canAccessMicrophone === 'true';
   }
 
-  set canAccessMicrophone(value){
+  private set canAccessMicrophone(value) {
     window.localStorage.setItem(CAN_ACCESS_MICROPHONE, value ? 'true' : 'false');
   }
 
@@ -90,6 +97,7 @@ export class AudioRecorderProvider {
     });
 
   }
+
   private getAudioPlatformConfig(platform: 'android' | 'ios'): AudioPlatformConfig {
     const android: AudioPlatformConfig = {
       basePath: this.file.externalDataDirectory,
@@ -111,4 +119,25 @@ export class AudioRecorderProvider {
     return platform == 'ios' ? ios : android;
   }
 
+  showAlertToCloseApp() {
+    const alert = this.alertCtrl.create({
+        title: 'Aviso',
+        message: 'Permissões concedidas. É necessário reabir o app para continuar. Deseja fazer isso agora?',
+        buttons: [
+            {
+                text: 'Ok',
+                handler: () => {
+                    // this.startRecord();
+                    // this.stopRecord().then(() => {
+                    //     this.platform.exitApp();
+                    // });
+                    this.platform.exitApp();
+                }
+            }, {
+                text: 'Cancelar'
+            }
+        ]
+    });
+    alert.present();
+}
 }

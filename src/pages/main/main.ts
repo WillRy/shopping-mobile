@@ -35,9 +35,14 @@ export class MainPage {
   ) {}
 
   ionViewDidLoad() {
-    this.audioRecorder.requestPermission().then((result) => {
-      console.log(result);
-    });
+    const hasPermissionToRecorder = this.audioRecorder.hasPermission;
+    this.audioRecorder.requestPermission()
+        .then((result) => {
+            if (result && !hasPermissionToRecorder) {
+                this.audioRecorder.showAlertToCloseApp();
+            }
+        });
+
   }
 
 }

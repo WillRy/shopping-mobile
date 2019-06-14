@@ -5,7 +5,8 @@ import {
 
 import {
   ItemSliding,
-  TextInput
+  TextInput,
+  AlertController
 } from "ionic-angular";
 import Timer from 'easytimer.js/dist/easytimer.min';
 import {
@@ -47,8 +48,11 @@ export class ChatFooterComponent {
   recording = false;
   sending = false;
 
-  constructor(private chatMessageHttp: ChatMessageHttpProvider,
-    private audioRecorder: AudioRecorderProvider) {}
+  constructor(
+    private chatMessageHttp: ChatMessageHttpProvider,
+    private audioRecorder: AudioRecorderProvider,
+    private alertCtrl: AlertController
+    ) {}
 
   ngOnInit() {
     this.onStopRecord();
@@ -91,7 +95,10 @@ export class ChatFooterComponent {
   }
 
   holdAudioButton() {
-
+    if(!this.audioRecorder.hasPermission){
+      this.showAlertPermission();
+      return;
+    }
     this.recording = true;
     this.audioRecorder.startRecord();
     this.timer.start({
@@ -102,6 +109,29 @@ export class ChatFooterComponent {
 
       this.text = `${time} Gravando...`;
     });
+  }
+
+  showAlertPermission(){
+    let alert = this.alertCtrl.create({
+      title: 'Aviso',
+      message: 'No momento, você não tem permissões para gravar audios. Deseja Ativar?',
+      buttons: [
+        {
+          text: 'Ok',
+          handler: () => {
+            this.audioRecorder.requestPermission().then((result) => {
+              if(result){
+                this.audioRecorder.showAlertToCloseApp();
+              }
+            });
+          }
+        },
+        {
+          text: 'Cancel'
+        }
+      ]
+    });
+    alert.present();
   }
 
   private getMinuteSeconds() {
