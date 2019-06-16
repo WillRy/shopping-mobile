@@ -1,3 +1,4 @@
+import { environment } from './../../environments/environment';
 import {
   CustomerCreatePage
 } from './../customer-create/customer-create';
@@ -36,6 +37,7 @@ import {
 export class LoginPhoneNumberPage {
 
 
+  showFirebaseUI = environment.showFirebaseUI;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private firebaseAuth: FirebaseAuthProvider,
@@ -50,7 +52,9 @@ export class LoginPhoneNumberPage {
         unsubscribed();
       }
     });
-    this.firebaseAuth.makePhoneNumberForm('#firebase-ui');
+    if(environment.showFirebaseUI){
+      this.firebaseAuth.makePhoneNumberForm('#firebase-ui');
+    }
   }
 
   handleAuthuser() {
@@ -61,9 +65,12 @@ export class LoginPhoneNumberPage {
           this.redirectToMainPage();
         },
         (responseError) => {
-          this.firebaseAuth
-            .makePhoneNumberForm('#firebase-ui')
-            .then(() => this.handleAuthuser());
+          if(environment.showFirebaseUI){
+            this.firebaseAuth
+              .makePhoneNumberForm('#firebase-ui')
+              .then(() => this.handleAuthuser());
+          }
+
           this.redirectToCustomerCreatePage();
         });
   }

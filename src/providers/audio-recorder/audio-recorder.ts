@@ -127,11 +127,10 @@ export class AudioRecorderProvider {
             {
                 text: 'Ok',
                 handler: () => {
-                    // this.startRecord();
-                    // this.stopRecord().then(() => {
-                    //     this.platform.exitApp();
-                    // });
-                    this.platform.exitApp();
+                    this.startRecord();
+                    this.stopRecord().then(() => {
+                        this.platform.exitApp();
+                    });
                 }
             }, {
                 text: 'Cancelar'

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "320744522318",
+    "firebase_url": "https://codeshopping-2004f.firebaseio.com",
+    "project_id": "codeshopping-2004f",
+    "storage_bucket": "codeshopping-2004f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:320744522318:android:b7feca230fddf7b8",
+        "android_client_info": {
+          "package_name": "com.willry.codeshopping"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "320744522318-oboliisvkdoieu4l791qicv0glu1sr9t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCsibUZlXRyWViTFl8bPvtZoW7If2z93-w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "320744522318-oboliisvkdoieu4l791qicv0glu1sr9t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

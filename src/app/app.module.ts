@@ -1,3 +1,4 @@
+import { FirebasePhoneNumberCheckComponent } from './../components/firebase-phone-number-check/firebase-phone-number-check';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
@@ -31,6 +32,7 @@ import { DirectivesModule } from '../directives/directives.module';
 import { StoragePermissionProvider } from '../providers/storage-permission/storage-permission';
 import { Diagnostic } from '@ionic-native/diagnostic';
 import { AudioRecorderProvider } from '../providers/audio-recorder/audio-recorder';
+import { SelectCountriesCodeComponent } from '../components/select-countries-code/select-countries-code';
 
 function jwtFactory(authProvider: AuthProvider) {
   return {
@@ -54,7 +56,9 @@ function jwtFactory(authProvider: AuthProvider) {
     ResetPhoneNumberPage,
     CustomerCreatePage,
     MainPage,
-    ChatGroupListComponent
+    ChatGroupListComponent,
+    FirebasePhoneNumberCheckComponent,
+    SelectCountriesCodeComponent
   ],
   imports: [
     BrowserModule,
@@ -82,7 +86,8 @@ function jwtFactory(authProvider: AuthProvider) {
     ResetPhoneNumberPage,
     CustomerCreatePage,
     MainPage,
-    ChatGroupListComponent
+    ChatGroupListComponent,
+    FirebasePhoneNumberCheckComponent
   ],
   providers: [
     StatusBar,
