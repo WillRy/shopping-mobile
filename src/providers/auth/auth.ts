@@ -71,7 +71,7 @@ export class AuthProvider {
 
   isAuth(): boolean {
     const token = this.getToken();
-    return !new JwtHelperService().isTokenExpired(token, 30);
+    return !this.isTokenExpired(token);
   }
 
   logout(): Observable < any > {
@@ -93,4 +93,23 @@ export class AuthProvider {
       profile: decodedPayload.profile
     } : null;
   }
+
+  isTokenExpired(token: string){
+    return new JwtHelperService().isTokenExpired(token, 30);
+  }
+
+  refresh(): Observable<{token:string}>{
+    return this.http.post<{token:string}>(this.refreshUrl(),{})
+    .pipe(
+      tap(data => {
+        this.setToken(data.token)
+      })
+    )
+  }
+
+  refreshUrl(){
+    return `${environment.api.url}/refresh`;
+  }
+
+
 }

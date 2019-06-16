@@ -1,5 +1,5 @@
 import { FirebasePhoneNumberCheckComponent } from './../components/firebase-phone-number-check/firebase-phone-number-check';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
@@ -33,6 +33,7 @@ import { StoragePermissionProvider } from '../providers/storage-permission/stora
 import { Diagnostic } from '@ionic-native/diagnostic';
 import { AudioRecorderProvider } from '../providers/audio-recorder/audio-recorder';
 import { SelectCountriesCodeComponent } from '../components/select-countries-code/select-countries-code';
+import { RefreshTokenInterceptor } from '../providers/auth/refresh-token-interceptor';
 
 function jwtFactory(authProvider: AuthProvider) {
   return {
@@ -103,7 +104,12 @@ function jwtFactory(authProvider: AuthProvider) {
     ChatGroupViewerProvider,
     StoragePermissionProvider,
     AudioRecorderProvider,
-    Diagnostic
+    Diagnostic,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: RefreshTokenInterceptor,
+      multi: true
+  },
   ]
 })
 export class AppModule {}

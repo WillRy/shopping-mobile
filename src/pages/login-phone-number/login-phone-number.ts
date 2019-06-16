@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { environment } from './../../environments/environment';
 import {
   CustomerCreatePage
@@ -39,9 +40,13 @@ export class LoginPhoneNumberPage {
 
   showFirebaseUI = environment.showFirebaseUI;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,
+  constructor(
+    public navCtrl: NavController, public navParams: NavParams,
     private firebaseAuth: FirebaseAuthProvider,
-    private authService: AuthProvider) {}
+    private authService: AuthProvider
+    ) {
+
+    }
 
 
 
