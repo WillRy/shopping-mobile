@@ -1,28 +1,37 @@
-import { App } from 'ionic-angular';
+import {
+  Injectable,
+  Injector
+} from '@angular/core';
+import {
+  HttpEvent,
+  HttpHandler,
+  HttpInterceptor,
+  HttpRequest,
+  HttpErrorResponse,
+  HttpResponseBase
+} from '@angular/common/http';
+import {
+  Observable
+} from 'rxjs/Observable';
+import {
+  tap,
+  flatMap
+} from 'rxjs/operators';
 import {
   AuthProvider
 } from './auth';
 import {
-  Injectable, Injector
-} from '@angular/core';
+  App
+} from 'ionic-angular';
 import {
-  HttpInterceptor,
-  HttpRequest,
-  HttpHandler,
-  HttpEvent,
-  HttpResponse,
-  HttpErrorResponse,
-  HttpResponseBase,
+  LoginOptionsPage
+} from '../../pages/login-options/login-options';
+import {
+  JwtInterceptor
+} from '@auth0/angular-jwt';
+import {
   HTTP_INTERCEPTORS
 } from '@angular/common/http';
-import {
-  Observable
-} from 'rxjs';
-import { LoginOptionsPage } from '../../pages/login-options/login-options';
-import { tap, flatMap } from 'rxjs/operators';
-import { JwtInterceptor } from '@auth0/angular-jwt';
-
-
 
 @Injectable()
 export class RefreshTokenInterceptor implements HttpInterceptor {
@@ -32,69 +41,80 @@ export class RefreshTokenInterceptor implements HttpInterceptor {
   constructor(private authService: AuthProvider, private app: App, private injector: Injector) {}
 
   intercept(req: HttpRequest < any > , next: HttpHandler): Observable < HttpEvent < any >> {
-    if(!this.authService.getToken() || !this.isTokenExpired() || req.url === this.authService.refreshUrl()){
-      return this.handleRequest(req,next);
-    }else{
-      return this.authService.refresh()
-      .pipe(
-        flatMap(data => {
-          const obs = this.jwtInterceptor.intercept(req,next);
-          this.setPipes(obs);
-          return obs;
-        })
-      )
+    if (!this.authService.getToken() || !this.isTokenExpired() || req.url === this.authService.refreshUrl()) {
+      return this.handleRequest(req, next);
+    } else {
+      console.log('tem que renovar o token');
+      return this.authService
+        .refresh()
+        .pipe(
+          flatMap(data => {
+            //return this.handleRequest(req, next); //cilada - recriar rec com token novo
+            const obs = this.jwtInterceptor.intercept(req, next);
+            this.setPipes(obs);
+            return obs;
+          })
+        )
     }
 
   }
 
-  private handleRequest(req: HttpRequest < any > , next: HttpHandler){
+  private isTokenExpired() {
+    const token = this.authService.getToken();
+    return this.authService.isTokenExpired(token);
+  }
+
+  private handleRequest(req: HttpRequest < any > , next: HttpHandler) {
     const obs = next.handle(req);
     this.setPipes(obs);
     return obs;
   }
 
-  private setPipes(observable: Observable<any>){
+  private get jwtInterceptor(): JwtInterceptor {
+    if (this._jwtInterceptor) {
+      return this._jwtInterceptor;
+    }
+
+    const interceptors = this.injector.get(HTTP_INTERCEPTORS);
+
+    const index = interceptors.findIndex((interceptor) => interceptor instanceof JwtInterceptor);
+
+    this._jwtInterceptor = interceptors[index] as JwtInterceptor;
+    //      console.log(this._jwtInterceptor);
+    return this._jwtInterceptor;
+  }
+
+  private setPipes(observable: Observable < any > ) {
     observable.pipe(
-      tap(
-        (event: HttpEvent < any > ) => {
-          this.setNewTokenIfResponseValid(event);
-        },
-        (eventError: HttpEvent < any > ) => {
-          this.setNewTokenIfResponseValid(eventError);
-          this.redirectToLoginIfUnauthenticated(eventError);
-        })
+      tap((event: HttpEvent < any > ) => {
+        console.log(event);
+        this.setNewTokenIfResponseValid(event);
+      }, (eventError: HttpEvent < any > ) => {
+        console.log('error refresh');
+        this.setNewTokenIfResponseValid(eventError);
+        this.redirectToLoginIfUnauthenticated(eventError);
+      })
     );
   }
 
-  private get jwtInterceptor(): JwtInterceptor{
-    if(this._jwtInterceptor){
-      return this._jwtInterceptor;
+  private redirectToLoginIfUnauthenticated(eventError: HttpEvent < any > ) {
+    if (eventError instanceof HttpErrorResponse && eventError.status == 401) {
+      this.authService.setToken(null);
+      console.log('nao autenticou.');
+      this.app.getRootNav().setRoot(LoginOptionsPage);
     }
-    const interceptors = this.injector.get(HTTP_INTERCEPTORS);
-    const index = interceptors.findIndex((interceptor) => interceptor instanceof JwtInterceptor);
-    this._jwtInterceptor = interceptors[index] as JwtInterceptor;
-    return this._jwtInterceptor;
   }
 
   private setNewTokenIfResponseValid(event: HttpEvent < any > ) {
     if (event instanceof HttpResponseBase) {
-      const authorizationHeader = event.headers.get('Authorization');
+      const authorizationHeader = event.headers.get('authorization');
+
       if (authorizationHeader) {
+        console.log('set new token', authorizationHeader);
         const token = authorizationHeader.split(' ')[1];
         this.authService.setToken(token);
       }
     }
   }
 
-  private redirectToLoginIfUnauthenticated(eventError: HttpEvent < any > ) {
-    if (eventError instanceof HttpErrorResponse && eventError.status === 401) {
-      this.authService.setToken(null);
-      this.app.getRootNav().setRoot(LoginOptionsPage);
-    }
-  }
-
-  private isTokenExpired(){
-    const token = this.authService.getToken();
-    return this.authService.isTokenExpired(token);
-  }
 }

@@ -43,7 +43,8 @@ export class LoginPhoneNumberPage {
   constructor(
     public navCtrl: NavController, public navParams: NavParams,
     private firebaseAuth: FirebaseAuthProvider,
-    private authService: AuthProvider
+    private authService: AuthProvider,
+    private http: HttpClient
     ) {
 
     }

@@ -38,3 +38,5 @@ src/app/firebase-config.ts
 
 src/environments/environment.ts
 src/environments/environment.prod.ts
+google-services.json
+GoogleService-Info.plist

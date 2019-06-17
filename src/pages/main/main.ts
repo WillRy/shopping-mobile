@@ -11,12 +11,8 @@ import {
 import {
   ChatGroupListComponent
 } from '../../components/chat-group-list/chat-group-list';
-/**
- * Generated class for the MainPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { RedirectIfNotAuthProvider } from '../../providers/redirect-if-not-auth/redirect-if-not-auth';
+
 
 @IonicPage()
 @Component({
@@ -31,8 +27,13 @@ export class MainPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     private storagePermission: StoragePermissionProvider,
-    private audioRecorder: AudioRecorderProvider
+    private audioRecorder: AudioRecorderProvider,
+    private redirectIfNotAuth: RedirectIfNotAuthProvider
   ) {}
+
+  ionViewCanEnter(){
+    return this.redirectIfNotAuth.ionViewCanEnter();
+  }
 
   ionViewDidLoad() {
     const hasPermissionToRecorder = this.audioRecorder.hasPermission;

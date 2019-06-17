@@ -34,6 +34,7 @@ import { Diagnostic } from '@ionic-native/diagnostic';
 import { AudioRecorderProvider } from '../providers/audio-recorder/audio-recorder';
 import { SelectCountriesCodeComponent } from '../components/select-countries-code/select-countries-code';
 import { RefreshTokenInterceptor } from '../providers/auth/refresh-token-interceptor';
+import { RedirectIfNotAuthProvider } from '../providers/redirect-if-not-auth/redirect-if-not-auth';
 
 function jwtFactory(authProvider: AuthProvider) {
   return {
@@ -110,6 +111,7 @@ function jwtFactory(authProvider: AuthProvider) {
       useClass: RefreshTokenInterceptor,
       multi: true
   },
+    RedirectIfNotAuthProvider,
   ]
 })
 export class AppModule {}

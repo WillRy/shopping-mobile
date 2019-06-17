@@ -25,6 +25,7 @@ import {
 import {
   Observable
 } from 'rxjs/Observable';
+import { RedirectIfNotAuthProvider } from '../../../providers/redirect-if-not-auth/redirect-if-not-auth';
 
 @IonicPage()
 @Component({
@@ -52,7 +53,8 @@ export class ChatMessagesPage {
     public navParams: NavParams,
     private firebaseAuth: FirebaseAuthProvider,
     private chatMessageFb: ChatGMessageFbProvider,
-    private isCurrentUser: IsCurrentUserPipe
+    private isCurrentUser: IsCurrentUserPipe,
+    private redirectIfNotAuth: RedirectIfNotAuthProvider
   ) {
     // this.chatGroup = this.navParams.get('chat_group');
     this.chatGroup = {
@@ -60,6 +62,10 @@ export class ChatMessagesPage {
       name: 'string',
       photo_url: 'string',
     };
+  }
+
+  ionViewCanEnter(){
+    return this.redirectIfNotAuth.ionViewCanEnter();
   }
 
   ionViewDidLoad() {
