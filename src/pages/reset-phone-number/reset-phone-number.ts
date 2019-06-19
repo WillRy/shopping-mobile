@@ -10,7 +10,8 @@ import {
   NavController,
   NavParams,
   AlertController,
-  ToastController
+  ToastController,
+  LoadingController
 } from 'ionic-angular';
 import {
   FormGroup,
@@ -45,7 +46,8 @@ export class ResetPhoneNumberPage {
     private firebaseAuth: FirebaseAuthProvider,
     private customerHttp: CustomerHttpProvider,
     private alertCtrl: AlertController,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private loadingCtrl: LoadingController
     ) {}
 
   ionViewDidLoad() {
@@ -66,9 +68,14 @@ export class ResetPhoneNumberPage {
   }
 
   requestUpdatePhoneNumber(){
+    const loader = this.loadingCtrl.create({
+      content:"Carregando"
+    });
+    loader.present();
     const email = this.email.value;
       this.customerHttp.requestUpdatePhoneNumber(email).subscribe(
         () => {
+        loader.dismiss();
         const alert = this.alertCtrl.create({
           title: 'Alerta',
           subTitle: 'Um email com a validacao da mudança foi enviado. Valide-o para logar com o novo telefone',
@@ -82,6 +89,7 @@ export class ResetPhoneNumberPage {
         alert.present();
       },
       (responseError) => {
+        loader.dismiss();
         const toast = this.toastCtrl.create({
           message:'Não foi possivel solicitar a auteração do telefone',
           duration: 3000
