@@ -26,6 +26,10 @@ import {
 import {
   environment
 } from '@app/env';
+import { forkJoin } from 'rxjs/observable/forkJoin';
+
+
+declare const cordova;
 
 const TOKEN_KEY = 'code_shopping_token';
 
@@ -91,14 +95,7 @@ export class AuthProvider {
     return true;
   }
 
-  logout(): Observable < any > {
-    return this.http.post(`${environment.api.url}/logout`, {})
-      .pipe(
-        tap(() => {
-          this.setToken(null);
-        })
-      );
-  }
+
 
   private setUserFromToken(token: string) {
     const decodedPayload = new JwtHelperService().decodeToken(token);
@@ -130,6 +127,17 @@ export class AuthProvider {
 
   refreshUrl() {
     return `${environment.api.url}/refresh`;
+  }
+
+  logout(): Observable<any>{
+    return forkJoin(
+      this.firebaseAuth.firebase.auth().signOut(),
+      cordova.plugins.firebase.auth.signOut(),
+      this.http.post(`${environment.api.url}/logout`,{})
+      .pipe(
+        tap(()=>this.setToken(null))
+      )
+    )
   }
 
 

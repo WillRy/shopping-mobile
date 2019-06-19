@@ -1,3 +1,4 @@
+import { MoreOptionsComponent } from './../components/more-options/more-options';
 import { FirebasePhoneNumberCheckComponent } from './../components/firebase-phone-number-check/firebase-phone-number-check';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
@@ -60,7 +61,8 @@ function jwtFactory(authProvider: AuthProvider) {
     MainPage,
     ChatGroupListComponent,
     FirebasePhoneNumberCheckComponent,
-    SelectCountriesCodeComponent
+    SelectCountriesCodeComponent,
+    MoreOptionsComponent
   ],
   imports: [
     BrowserModule,
@@ -89,7 +91,8 @@ function jwtFactory(authProvider: AuthProvider) {
     CustomerCreatePage,
     MainPage,
     ChatGroupListComponent,
-    FirebasePhoneNumberCheckComponent
+    FirebasePhoneNumberCheckComponent,
+    MoreOptionsComponent
   ],
   providers: [
     StatusBar,

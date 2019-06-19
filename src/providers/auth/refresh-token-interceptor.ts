@@ -1,62 +1,61 @@
 import {
   Injectable,
   Injector
-} from '@angular/core';
+} from "@angular/core";
 import {
-  HttpEvent,
-  HttpHandler,
   HttpInterceptor,
   HttpRequest,
+  HttpHandler,
+  HttpEvent,
+  HTTP_INTERCEPTORS,
   HttpErrorResponse,
   HttpResponseBase
-} from '@angular/common/http';
-import {
-  Observable
-} from 'rxjs/Observable';
-import {
-  tap,
-  flatMap
-} from 'rxjs/operators';
-import {
-  AuthProvider
-} from './auth';
-import {
-  App
-} from 'ionic-angular';
-import {
-  LoginOptionsPage
-} from '../../pages/login-options/login-options';
+} from "@angular/common/http";
 import {
   JwtInterceptor
-} from '@auth0/angular-jwt';
+} from "@auth0/angular-jwt";
 import {
-  HTTP_INTERCEPTORS
-} from '@angular/common/http';
+  AuthProvider
+} from "./auth";
+import {
+  App
+} from "ionic-angular";
+import {
+  Observable
+} from "rxjs/Observable";
+import {
+  flatMap,
+  tap
+} from "rxjs/operators";
+import {
+  LoginOptionsPage
+} from "../../pages/login-options/login-options";
 
 @Injectable()
 export class RefreshTokenInterceptor implements HttpInterceptor {
 
   private _jwtInterceptor: JwtInterceptor;
 
-  constructor(private authService: AuthProvider, private app: App, private injector: Injector) {}
+  constructor(private authService: AuthProvider, private app: App, private injector: Injector) {
+
+  }
 
   intercept(req: HttpRequest < any > , next: HttpHandler): Observable < HttpEvent < any >> {
-    if (!this.authService.getToken() || !this.isTokenExpired() || req.url === this.authService.refreshUrl()) {
+    this.jwtInterceptor
+    if (!this.authService.getToken() || !this.isTokenExpired() ||
+      req.url === this.authService.refreshUrl()) {
       return this.handleRequest(req, next);
     } else {
-      console.log('tem que renovar o token');
       return this.authService
         .refresh()
         .pipe(
           flatMap(data => {
-            //return this.handleRequest(req, next); //cilada - recriar rec com token novo
-            const obs = this.jwtInterceptor.intercept(req, next);
+            const obs = this._jwtInterceptor.intercept(req, next);
             this.setPipes(obs);
             return obs;
           })
         )
     }
-
   }
 
   private isTokenExpired() {
@@ -70,37 +69,32 @@ export class RefreshTokenInterceptor implements HttpInterceptor {
     return obs;
   }
 
-  private get jwtInterceptor(): JwtInterceptor {
-    if (this._jwtInterceptor) {
-      return this._jwtInterceptor;
-    }
-
-    const interceptors = this.injector.get(HTTP_INTERCEPTORS);
-
-    const index = interceptors.findIndex((interceptor) => interceptor instanceof JwtInterceptor);
-
-    this._jwtInterceptor = interceptors[index] as JwtInterceptor;
-    //      console.log(this._jwtInterceptor);
-    return this._jwtInterceptor;
-  }
-
   private setPipes(observable: Observable < any > ) {
     observable.pipe(
       tap((event: HttpEvent < any > ) => {
         console.log(event);
         this.setNewTokenIfResponseValid(event);
       }, (eventError: HttpEvent < any > ) => {
-        console.log('error refresh');
         this.setNewTokenIfResponseValid(eventError);
         this.redirectToLoginIfUnauthenticated(eventError);
       })
-    );
+    )
+  }
+
+  private get jwtInterceptor(): JwtInterceptor {
+    if (this._jwtInterceptor) {
+      return this._jwtInterceptor;
+    }
+
+    const interceptors = this.injector.get(HTTP_INTERCEPTORS);
+    const index = interceptors.findIndex((interceptor) => interceptor instanceof JwtInterceptor);
+    this._jwtInterceptor = interceptors[index] as JwtInterceptor;
+    return this._jwtInterceptor;
   }
 
   private redirectToLoginIfUnauthenticated(eventError: HttpEvent < any > ) {
     if (eventError instanceof HttpErrorResponse && eventError.status == 401) {
       this.authService.setToken(null);
-      console.log('nao autenticou.');
       this.app.getRootNav().setRoot(LoginOptionsPage);
     }
   }
@@ -108,13 +102,10 @@ export class RefreshTokenInterceptor implements HttpInterceptor {
   private setNewTokenIfResponseValid(event: HttpEvent < any > ) {
     if (event instanceof HttpResponseBase) {
       const authorizationHeader = event.headers.get('authorization');
-
       if (authorizationHeader) {
-        console.log('set new token', authorizationHeader);
         const token = authorizationHeader.split(' ')[1];
         this.authService.setToken(token);
       }
     }
   }
-
 }

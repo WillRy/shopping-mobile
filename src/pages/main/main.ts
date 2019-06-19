@@ -1,3 +1,4 @@
+import { MoreOptionsComponent } from './../../components/more-options/more-options';
 import { AudioRecorderProvider } from '../../providers/audio-recorder/audio-recorder';
 import { StoragePermissionProvider } from '../../providers/storage-permission/storage-permission';
 import {
@@ -6,7 +7,9 @@ import {
 import {
   IonicPage,
   NavController,
-  NavParams
+  NavParams,
+  Popover,
+  PopoverController
 } from 'ionic-angular';
 import {
   ChatGroupListComponent
@@ -26,9 +29,9 @@ export class MainPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private storagePermission: StoragePermissionProvider,
     private audioRecorder: AudioRecorderProvider,
-    private redirectIfNotAuth: RedirectIfNotAuthProvider
+    private redirectIfNotAuth: RedirectIfNotAuthProvider,
+    private popover: PopoverController
   ) {}
 
   ionViewCanEnter(){
@@ -44,6 +47,13 @@ export class MainPage {
             }
         });
 
+  }
+
+  presentMoreOptions(event){
+    const popover = this.popover.create(MoreOptionsComponent);
+    popover.present({
+      ev: event
+    });
   }
 
 }
