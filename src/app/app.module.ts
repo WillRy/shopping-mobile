@@ -36,6 +36,9 @@ import { AudioRecorderProvider } from '../providers/audio-recorder/audio-recorde
 import { SelectCountriesCodeComponent } from '../components/select-countries-code/select-countries-code';
 import { RefreshTokenInterceptor } from '../providers/auth/refresh-token-interceptor';
 import { RedirectIfNotAuthProvider } from '../providers/redirect-if-not-auth/redirect-if-not-auth';
+import { FirebaseMessaging } from '@ionic-native/firebase-messaging';
+import { PushNotificationProvider } from '../providers/push-notification/push-notification';
+import { UserProfileHttp } from '../providers/http/user-profile-http';
 
 function jwtFactory(authProvider: AuthProvider) {
   return {
@@ -115,6 +118,9 @@ function jwtFactory(authProvider: AuthProvider) {
       multi: true
   },
     RedirectIfNotAuthProvider,
+    FirebaseMessaging,
+    PushNotificationProvider,
+    UserProfileHttp
   ]
 })
 export class AppModule {}
