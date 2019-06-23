@@ -1,20 +1,34 @@
-import { MoreOptionsComponent } from './../../components/more-options/more-options';
-import { AudioRecorderProvider } from '../../providers/audio-recorder/audio-recorder';
-import { StoragePermissionProvider } from '../../providers/storage-permission/storage-permission';
 import {
-  Component
+  MoreOptionsComponent
+} from './../../components/more-options/more-options';
+import {
+  AudioRecorderProvider
+} from '../../providers/audio-recorder/audio-recorder';
+import {
+  Component,
+  ViewChild
 } from '@angular/core';
 import {
   IonicPage,
   NavController,
   NavParams,
-  Popover,
   PopoverController
 } from 'ionic-angular';
 import {
   ChatGroupListComponent
 } from '../../components/chat-group-list/chat-group-list';
-import { RedirectIfNotAuthProvider } from '../../providers/redirect-if-not-auth/redirect-if-not-auth';
+import {
+  RedirectIfNotAuthProvider
+} from '../../providers/redirect-if-not-auth/redirect-if-not-auth';
+import {
+  PushNotificationProvider
+} from '../../providers/push-notification/push-notification';
+import {
+  FirebaseMessaging
+} from '@ionic-native/firebase-messaging';
+import {
+  SuperTab
+} from 'ionic2-super-tabs';
 
 
 @IonicPage()
@@ -26,30 +40,42 @@ export class MainPage {
 
   chatGroupList = ChatGroupListComponent;
 
+  @ViewChild('tabChatGroupList')
+  tabChatGroupList: SuperTab
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     private audioRecorder: AudioRecorderProvider,
     private redirectIfNotAuth: RedirectIfNotAuthProvider,
-    private popover: PopoverController
+    private popover: PopoverController,
+    private pushNotification: PushNotificationProvider,
+    private fcm: FirebaseMessaging
   ) {}
 
-  ionViewCanEnter(){
+  ionViewCanEnter() {
     return this.redirectIfNotAuth.ionViewCanEnter();
   }
 
   ionViewDidLoad() {
+    this.pushNotification.registerToken();
+
+    this.fcm.onBackgroundMessage().subscribe((data) => {
+      const component: ChatGroupListComponent = this.tabChatGroupList.getViews()[0].instance;
+      component.goToMessagesFromNotification(data.chat_group_id);
+    });
+
     const hasPermissionToRecorder = this.audioRecorder.hasPermission;
     this.audioRecorder.requestPermission()
-        .then((result) => {
-            if (result && !hasPermissionToRecorder) {
-                this.audioRecorder.showAlertToCloseApp();
-            }
-        });
+      .then((result) => {
+        if (result && !hasPermissionToRecorder) {
+          this.audioRecorder.showAlertToCloseApp();
+        }
+      });
 
   }
 
-  presentMoreOptions(event){
+  presentMoreOptions(event) {
     const popover = this.popover.create(MoreOptionsComponent);
     popover.present({
       ev: event
