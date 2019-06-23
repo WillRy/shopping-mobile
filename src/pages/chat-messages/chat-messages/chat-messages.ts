@@ -56,12 +56,12 @@ export class ChatMessagesPage {
     private isCurrentUser: IsCurrentUserPipe,
     private redirectIfNotAuth: RedirectIfNotAuthProvider
   ) {
-    // this.chatGroup = this.navParams.get('chat_group');
-    this.chatGroup = {
-      id: 1,
-      name: 'string',
-      photo_url: 'string',
-    };
+    this.chatGroup = this.navParams.get('chat_group');
+    // this.chatGroup = {
+    //   id: 1,
+    //   name: 'string',
+    //   photo_url: 'string',
+    // };
   }
 
   ionViewCanEnter(){

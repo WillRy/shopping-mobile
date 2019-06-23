@@ -35,6 +35,7 @@ export class ChatGroupListComponent {
 
   groups: ChatGroup[] = [];
   chatActive;
+  chatGroupIdToFirstOpen = null;
 
   constructor(
     private firebaseAuth: FirebaseAuthProvider,
@@ -52,6 +53,7 @@ export class ChatGroupListComponent {
         this.chatGroupViewer.loadViewed(group);
       })
       this.groups = groups;
+      this.goToMessagesFromNotification();
     });
 
     this.chatGroupFb.onAdded().subscribe((group) => {
@@ -77,6 +79,25 @@ export class ChatGroupListComponent {
 
   formatTextMessage(message: ChatMessage) {
     return message.content.length > 15 ? message.content.slice(0, 15) + '...' : message.content
+  }
+
+  goToMessagesFromNotification(chatGroupId = null){
+    if(chatGroupId){
+      this.chatGroupIdToFirstOpen = chatGroupId;
+    }
+    if(this.chatGroupIdToFirstOpen){
+      const group = this.getById(chatGroupId);
+      if(group){
+        this.goToMessages(group);
+      }
+    }
+  }
+
+  getById(chatGroupId){
+    // push notification string
+    const index = this.groups.findIndex((group) => group.id == chatGroupId);
+    return index === -1 ? null : this.groups[index];
+
   }
 
   goToMessages(group: ChatGroup){
