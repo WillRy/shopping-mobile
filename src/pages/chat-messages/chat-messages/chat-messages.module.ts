@@ -12,6 +12,7 @@ import {LongPressModule} from "ionic-long-press";
 import {AudioRecorderProvider} from "../../../providers/audio-recorder/audio-recorder";
 import { ChatGMessageFbProvider } from '../../../providers/firebase/chat-message-fb';
 import { PhotoViewer } from '@ionic-native/photo-viewer';
+import { RedirectIfNotAuthProvider } from '../../../providers/redirect-if-not-auth/redirect-if-not-auth';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { PhotoViewer } from '@ionic-native/photo-viewer';
   providers: [
     AudioRecorderProvider,
     ChatGMessageFbProvider,
-    PhotoViewer
+    PhotoViewer,
+    RedirectIfNotAuthProvider
   ]
 })
 export class ChatMessagesPageModule {}

@@ -1,3 +1,4 @@
+import { MainPage } from '../main/main';
 import { CustomerHttpProvider } from './../../providers/http/customer-http';
 import {
   Component,
@@ -7,7 +8,8 @@ import {
   IonicPage,
   NavController,
   NavParams,
-  TextInput
+  TextInput,
+  LoadingController
 } from 'ionic-angular';
 import {
   FormGroup,
@@ -40,7 +42,8 @@ export class CustomerCreatePage {
     public navCtrl: NavController,
     public navParams: NavParams,
     private formBuilder: FormBuilder,
-    private customerHttp: CustomerHttpProvider
+    private customerHttp: CustomerHttpProvider,
+    private loadingCtrl: LoadingController
   ) {
     this.form = this.formBuilder.group({
       name: ['', [Validators.required, Validators.maxLength(255)]],
@@ -50,9 +53,18 @@ export class CustomerCreatePage {
   }
 
   submit() {
+    const loader = this.loadingCtrl.create({
+      content:"Carregando"
+    });
+    loader.present();
     this.customerHttp.create(this.form.value)
     .subscribe(() => {
-      console.log('cliente criado');
+      loader.dismiss();
+      this.navCtrl.setRoot(MainPage);
+    },
+    (error)=>{
+      loader.dismiss();
+      console.log(error);
     });
     return false;
   }

@@ -36,11 +36,10 @@ export class FirebaseAuthProvider {
 
       const uiConfig = {
         signInOptions: [{
-            provider: firebase.auth.PhoneAuthProvider.PROVIDER_ID,
-            // defaultCountry: navigator.language.slice(-2),
-            defaultCountry: 'US'
-          }
-        ],
+          provider: firebase.auth.PhoneAuthProvider.PROVIDER_ID,
+          // defaultCountry: navigator.language.slice(-2),
+          defaultCountry: 'US'
+        }],
         callbacks: {
           signInSuccessWithAuthResult: (authResult, redirectUrl) => {
 
@@ -49,7 +48,7 @@ export class FirebaseAuthProvider {
           }
         }
       };
-     this.makeFormFirebaseUI('#firebase-ui', uiConfig);
+      this.makeFormFirebaseUI('#firebase-ui', uiConfig);
     })
 
 
@@ -83,37 +82,47 @@ export class FirebaseAuthProvider {
 
   }
 
-  getUser(): Promise<firebase.User | null> {
+  getUser(): Promise < firebase.User | null > {
     const currentUser = this.getCurrentUser();
     if (currentUser) {
-        return Promise.resolve(currentUser);
+      return Promise.resolve(currentUser);
     }
 
     return new Promise((resolve, reject) => {
-        const unsubscribed = this.firebase.auth().onAuthStateChanged(
-            (user) => {
-                resolve(user);
-                unsubscribed();
-            }, (error) => {
-                reject(error);
-                unsubscribed();
-            }
-        )
-    });
-}
-
-  async getToken(): Promise<string> {
-    try {
-        const user = await this.getUser();
-        if (!user) {
-            throw new Error('User not found');
+      const unsubscribed = this.firebase.auth().onAuthStateChanged(
+        (user) => {
+          resolve(user);
+          unsubscribed();
+        }, (error) => {
+          reject(error);
+          unsubscribed();
         }
-        const token = await user.getIdTokenResult();
-        return token.token;
+      )
+    });
+  }
+
+  async getToken(): Promise < string > {
+    try {
+      const user = await this.getUser();
+      if (!user) {
+        throw new Error('User not found');
+      }
+      const token = await user.getIdTokenResult();
+      return token.token;
     } catch (e) {
-        return Promise.reject(e);
+      return Promise.reject(e);
     }
-}
+  }
+
+  async isAuth(): Promise < boolean > {
+    try {
+      const user = await this.getUser();
+      return user !==null;
+    } catch (error) {
+      return false;
+    }
+  }
+
 
   getCurrentUser(): firebase.User | null {
     return this.firebase.auth().currentUser;

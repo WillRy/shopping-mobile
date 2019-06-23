@@ -1,3 +1,4 @@
+import { MainPage } from './../main/main';
 import {
   Component
 } from '@angular/core';
@@ -13,6 +14,7 @@ import {
 import {
   ResetPhoneNumberPage
 } from '../reset-phone-number/reset-phone-number';
+import { AuthProvider } from '../../providers/auth/auth';
 
 /**
  * Generated class for the LoginOptionsPage page.
@@ -31,8 +33,20 @@ export class LoginOptionsPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private actionSheetCtrl: ActionSheetController
+    private actionSheetCtrl: ActionSheetController,
+    private auth: AuthProvider
   ) {}
+
+  ionViewCanEnter(){
+    return this.auth.isFullyAuth().then((isAuth) => {
+      if(isAuth){
+        setTimeout(()=>{
+          this.navCtrl.setRoot(MainPage);
+        });
+      }
+      return !isAuth;
+    })
+  }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginOptionsPage');

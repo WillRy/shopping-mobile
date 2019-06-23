@@ -1,4 +1,6 @@
-import { HttpClientModule } from '@angular/common/http';
+import { MoreOptionsComponent } from './../components/more-options/more-options';
+import { FirebasePhoneNumberCheckComponent } from './../components/firebase-phone-number-check/firebase-phone-number-check';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
@@ -31,6 +33,9 @@ import { DirectivesModule } from '../directives/directives.module';
 import { StoragePermissionProvider } from '../providers/storage-permission/storage-permission';
 import { Diagnostic } from '@ionic-native/diagnostic';
 import { AudioRecorderProvider } from '../providers/audio-recorder/audio-recorder';
+import { SelectCountriesCodeComponent } from '../components/select-countries-code/select-countries-code';
+import { RefreshTokenInterceptor } from '../providers/auth/refresh-token-interceptor';
+import { RedirectIfNotAuthProvider } from '../providers/redirect-if-not-auth/redirect-if-not-auth';
 
 function jwtFactory(authProvider: AuthProvider) {
   return {
@@ -54,7 +59,10 @@ function jwtFactory(authProvider: AuthProvider) {
     ResetPhoneNumberPage,
     CustomerCreatePage,
     MainPage,
-    ChatGroupListComponent
+    ChatGroupListComponent,
+    FirebasePhoneNumberCheckComponent,
+    SelectCountriesCodeComponent,
+    MoreOptionsComponent
   ],
   imports: [
     BrowserModule,
@@ -82,7 +90,9 @@ function jwtFactory(authProvider: AuthProvider) {
     ResetPhoneNumberPage,
     CustomerCreatePage,
     MainPage,
-    ChatGroupListComponent
+    ChatGroupListComponent,
+    FirebasePhoneNumberCheckComponent,
+    MoreOptionsComponent
   ],
   providers: [
     StatusBar,
@@ -98,7 +108,13 @@ function jwtFactory(authProvider: AuthProvider) {
     ChatGroupViewerProvider,
     StoragePermissionProvider,
     AudioRecorderProvider,
-    Diagnostic
+    Diagnostic,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: RefreshTokenInterceptor,
+      multi: true
+  },
+    RedirectIfNotAuthProvider,
   ]
 })
 export class AppModule {}

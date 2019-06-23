@@ -1,3 +1,4 @@
+import { MoreOptionsComponent } from './../../components/more-options/more-options';
 import { AudioRecorderProvider } from '../../providers/audio-recorder/audio-recorder';
 import { StoragePermissionProvider } from '../../providers/storage-permission/storage-permission';
 import {
@@ -6,17 +7,15 @@ import {
 import {
   IonicPage,
   NavController,
-  NavParams
+  NavParams,
+  Popover,
+  PopoverController
 } from 'ionic-angular';
 import {
   ChatGroupListComponent
 } from '../../components/chat-group-list/chat-group-list';
-/**
- * Generated class for the MainPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { RedirectIfNotAuthProvider } from '../../providers/redirect-if-not-auth/redirect-if-not-auth';
+
 
 @IonicPage()
 @Component({
@@ -30,9 +29,14 @@ export class MainPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private storagePermission: StoragePermissionProvider,
-    private audioRecorder: AudioRecorderProvider
+    private audioRecorder: AudioRecorderProvider,
+    private redirectIfNotAuth: RedirectIfNotAuthProvider,
+    private popover: PopoverController
   ) {}
+
+  ionViewCanEnter(){
+    return this.redirectIfNotAuth.ionViewCanEnter();
+  }
 
   ionViewDidLoad() {
     const hasPermissionToRecorder = this.audioRecorder.hasPermission;
@@ -43,6 +47,13 @@ export class MainPage {
             }
         });
 
+  }
+
+  presentMoreOptions(event){
+    const popover = this.popover.create(MoreOptionsComponent);
+    popover.present({
+      ev: event
+    });
   }
 
 }

@@ -10,7 +10,8 @@ import {
   NavController,
   NavParams,
   AlertController,
-  ToastController
+  ToastController,
+  LoadingController
 } from 'ionic-angular';
 import {
   FormGroup,
@@ -18,6 +19,7 @@ import {
   Validators
 } from '@angular/forms';
 import { LoginOptionsPage } from '../login-options/login-options';
+import { environment } from './../../environments/environment';
 
 /**
  * Generated class for the ResetPhoneNumberPage page.
@@ -34,7 +36,9 @@ import { LoginOptionsPage } from '../login-options/login-options';
 export class ResetPhoneNumberPage {
 
   email = new FormControl('', [Validators.required, Validators.email])
-  canShowFirebaseUI = false;
+  hasBtnEmailClicked = false;
+
+  showFirebaseUI = environment.showFirebaseUI;
 
   constructor(
     public navCtrl: NavController,
@@ -42,23 +46,36 @@ export class ResetPhoneNumberPage {
     private firebaseAuth: FirebaseAuthProvider,
     private customerHttp: CustomerHttpProvider,
     private alertCtrl: AlertController,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private loadingCtrl: LoadingController
     ) {}
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ResetPhoneNumberPage');
   }
 
-  showFirebaseUI() {
-    this.canShowFirebaseUI = true;
+  loadFirebaseUI() {
+    this.hasBtnEmailClicked = true;
     this.handleUpdate();
   }
 
   handleUpdate() {
-    this.firebaseAuth.makePhoneNumberForm('#firebase-ui').then(() => {
-      const email = this.email.value;
+    if(environment.showFirebaseUI){
+      this.firebaseAuth.makePhoneNumberForm('#firebase-ui').then(() => {
+        this.requestUpdatePhoneNumber();
+      });
+    }
+  }
+
+  requestUpdatePhoneNumber(){
+    const loader = this.loadingCtrl.create({
+      content:"Carregando"
+    });
+    loader.present();
+    const email = this.email.value;
       this.customerHttp.requestUpdatePhoneNumber(email).subscribe(
         () => {
+        loader.dismiss();
         const alert = this.alertCtrl.create({
           title: 'Alerta',
           subTitle: 'Um email com a validacao da mudança foi enviado. Valide-o para logar com o novo telefone',
@@ -72,6 +89,7 @@ export class ResetPhoneNumberPage {
         alert.present();
       },
       (responseError) => {
+        loader.dismiss();
         const toast = this.toastCtrl.create({
           message:'Não foi possivel solicitar a auteração do telefone',
           duration: 3000
@@ -79,7 +97,6 @@ export class ResetPhoneNumberPage {
         toast.present();
         this.handleUpdate();
       });
-    });
   }
 
 }
