@@ -9,7 +9,13 @@
     "clean": "ionic-app-scripts clean",
     "build": "ionic-app-scripts build",
     "lint": "ionic-app-scripts lint",
-    "env": "node generate-env.js"
+    "env": "node generate-env.js",
+    "ionic:build": "ionic-app-scripts build",
+    "ionic:build:before": "node scripts/copy_resource_files.js",
+    "ionic:serve": "ionic-app-scripts serve",
+    "device": "ionic cordova run android --device --livereload",
+    "emulator": "ionic cordova run android --emulator --livereload",
+    "config:build": "node scripts/build-config.js"
   },
   "config": {
     "ionic_webpack": "./config/webpack.config.js"
