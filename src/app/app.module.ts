@@ -39,6 +39,9 @@ import { RedirectIfNotAuthProvider } from '../providers/redirect-if-not-auth/red
 import { FirebaseMessaging } from '@ionic-native/firebase-messaging';
 import { PushNotificationProvider } from '../providers/push-notification/push-notification';
 import { UserProfileHttp } from '../providers/http/user-profile-http';
+import { FirebaseDynamicLinks } from '@ionic-native/firebase-dynamic-links';
+import { ChatInvitationProvider } from '../providers/chat-invitation/chat-invitation';
+
 
 function jwtFactory(authProvider: AuthProvider) {
   return {
@@ -120,7 +123,9 @@ function jwtFactory(authProvider: AuthProvider) {
     RedirectIfNotAuthProvider,
     FirebaseMessaging,
     PushNotificationProvider,
-    UserProfileHttp
+    UserProfileHttp,
+    FirebaseDynamicLinks,
+    ChatInvitationProvider
   ]
 })
 export class AppModule {}

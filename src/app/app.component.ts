@@ -1,3 +1,5 @@
+import { ChatInvitationProvider } from './../providers/chat-invitation/chat-invitation';
+import { FirebaseDynamicLinks } from '@ionic-native/firebase-dynamic-links';
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -18,7 +20,12 @@ export class MyApp {
 
   pages: Array<{title: string, component: any}>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+  constructor(
+    public platform: Platform,
+    public statusBar: StatusBar,
+    public splashScreen: SplashScreen,
+    private chatInvitation: ChatInvitationProvider
+    ) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
@@ -35,6 +42,8 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      this.chatInvitation.listen();
+
     });
   }
 

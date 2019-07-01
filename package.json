@@ -34,6 +34,7 @@
     "@ionic-native/core": "~4.20.0",
     "@ionic-native/diagnostic": "^4.20.0",
     "@ionic-native/file": "^4.20.0",
+    "@ionic-native/firebase-dynamic-links": "^4.20.0",
     "@ionic-native/firebase-messaging": "^4.20.0",
     "@ionic-native/media": "^4.20.0",
     "@ionic-native/photo-viewer": "^4.20.0",
