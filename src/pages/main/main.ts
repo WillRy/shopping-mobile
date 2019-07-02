@@ -29,6 +29,7 @@ import {
 import {
   SuperTab
 } from 'ionic2-super-tabs';
+import { ChatInvitationProvider } from '../../providers/chat-invitation/chat-invitation';
 
 
 @IonicPage()
@@ -50,7 +51,8 @@ export class MainPage {
     private redirectIfNotAuth: RedirectIfNotAuthProvider,
     private popover: PopoverController,
     private pushNotification: PushNotificationProvider,
-    private fcm: FirebaseMessaging
+    private fcm: FirebaseMessaging,
+    private chatInvitation: ChatInvitationProvider
   ) {}
 
   ionViewCanEnter() {
@@ -72,7 +74,7 @@ export class MainPage {
           this.audioRecorder.showAlertToCloseApp();
         }
       });
-
+      this.chatInvitation.requestInvitation();
   }
 
   presentMoreOptions(event) {
