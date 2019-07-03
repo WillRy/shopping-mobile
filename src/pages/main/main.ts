@@ -1,3 +1,4 @@
+import { ToastController } from 'ionic-angular';
 import {
   MoreOptionsComponent
 } from './../../components/more-options/more-options';
@@ -52,7 +53,8 @@ export class MainPage {
     private popover: PopoverController,
     private pushNotification: PushNotificationProvider,
     private fcm: FirebaseMessaging,
-    private chatInvitation: ChatInvitationProvider
+    private chatInvitation: ChatInvitationProvider,
+    private toastCtrl: ToastController
   ) {}
 
   ionViewCanEnter() {
@@ -61,10 +63,19 @@ export class MainPage {
 
   ionViewDidLoad() {
     this.pushNotification.registerToken();
+    this.pushNotification.onNewMessage().subscribe(data => {
+      if(data.background){
+        const component: ChatGroupListComponent = this.tabChatGroupList.getViews()[0].instance;
+        component.goToMessagesFromNotification(data.data.chat_group_id);
+      }
+    });
 
-    this.fcm.onBackgroundMessage().subscribe((data) => {
-      const component: ChatGroupListComponent = this.tabChatGroupList.getViews()[0].instance;
-      component.goToMessagesFromNotification(data.chat_group_id);
+    this.pushNotification.onChatGroupSubscribe().subscribe(data => {
+       const toast = this.toastCtrl.create({
+         message: `Sua inscrição no grupo ${data.data.chat_group_name} foi aprovada`,
+         duration: 7000
+       });
+       toast.present();
     });
 
     const hasPermissionToRecorder = this.audioRecorder.hasPermission;
