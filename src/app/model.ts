@@ -57,3 +57,19 @@ export interface AudioPlatformConfig {
   mimeType: string;
   fullPath: string;
 };
+export interface Product {
+  readonly id: number;
+  readonly name: string;
+  readonly description: string;
+  readonly price: number;
+  readonly slug?: string;
+  readonly active: boolean;
+  readonly photo: File;
+  readonly photo_url: string;
+  readonly created_at?: {
+    date: string;
+  };
+  readonly updated_at?: {
+    date: string;
+  };
+}
