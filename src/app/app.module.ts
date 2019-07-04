@@ -42,6 +42,7 @@ import { FirebaseDynamicLinks } from '@ionic-native/firebase-dynamic-links';
 import { ChatInvitationProvider } from '../providers/chat-invitation/chat-invitation';
 import { ProductListComponent } from '../components/product-list/product-list';
 import { ProductHttpProvider } from '../providers/http/product-http';
+import { ProductSearchbarComponent } from '../components/product-searchbar/product-searchbar';
 
 
 function jwtFactory(authProvider: AuthProvider) {
@@ -70,7 +71,8 @@ function jwtFactory(authProvider: AuthProvider) {
     FirebasePhoneNumberCheckComponent,
     SelectCountriesCodeComponent,
     MoreOptionsComponent,
-    ProductListComponent
+    ProductListComponent,
+    ProductSearchbarComponent
   ],
   imports: [
     BrowserModule,
@@ -101,7 +103,8 @@ function jwtFactory(authProvider: AuthProvider) {
     ChatGroupListComponent,
     FirebasePhoneNumberCheckComponent,
     MoreOptionsComponent,
-    ProductListComponent
+    ProductListComponent,
+    ProductSearchbarComponent
   ],
   providers: [
     StatusBar,

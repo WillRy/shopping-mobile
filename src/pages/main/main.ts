@@ -44,6 +44,7 @@ export class MainPage {
 
   chatGroupList = ChatGroupListComponent;
   productList = ProductListComponent;
+  canShowSearchBar = false;
 
   @ViewChild('tabChatGroupList')
   tabChatGroupList: SuperTab
@@ -104,6 +105,12 @@ export class MainPage {
   get canShowSearchIcon(){
     const superTab = this.superTabs.getActiveTab();
     return superTab.tabId === 'products';
+  }
+
+  onTabSelect(event){
+    if(event.id !== "products"){
+      this.canShowSearchBar = false;
+    }
   }
 
 }
