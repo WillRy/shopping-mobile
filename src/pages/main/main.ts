@@ -31,6 +31,7 @@ import {
   SuperTab
 } from 'ionic2-super-tabs';
 import { ChatInvitationProvider } from '../../providers/chat-invitation/chat-invitation';
+import { ProductListComponent } from '../../components/product-list/product-list';
 
 
 @IonicPage()
@@ -41,6 +42,7 @@ import { ChatInvitationProvider } from '../../providers/chat-invitation/chat-inv
 export class MainPage {
 
   chatGroupList = ChatGroupListComponent;
+  productList = ProductListComponent;
 
   @ViewChild('tabChatGroupList')
   tabChatGroupList: SuperTab
