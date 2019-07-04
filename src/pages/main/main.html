@@ -8,6 +8,9 @@
   <ion-navbar color="green-dark">
     <ion-title>CodeShopping</ion-title>
     <ion-buttons end>
+      <button ion-button icon-only [hidden]="!canShowSearchIcon">
+          <ion-icon name="search"></ion-icon>
+      </button>
       <button ion-button icon-only (click)="presentMoreOptions($event)">
         <ion-icon name="more"></ion-icon>
       </button>
@@ -17,7 +20,7 @@
 
 <ion-content class="hide-scroll-content">
   <super-tabs toolbarBackground="green-dark" toolbarColor="light" indicatorColor="light">
-    <super-tab [root]="productList" title="Produtos"></super-tab>
-    <super-tab [root]="chatGroupList" title="Grupos" #tabChatGroupList></super-tab>
+    <super-tab id="products" [root]="productList" title="Produtos"></super-tab>
+    <super-tab id="groups" [root]="chatGroupList" title="Grupos" #tabChatGroupList></super-tab>
   </super-tabs>
 </ion-content>
