@@ -6,10 +6,12 @@ import {
   Refresher,
   RefresherContent,
   ToastController,
-  Toast
+  Toast,
+  App
 } from "ionic-angular";
 import { ProductSearchProvider } from "../../providers/product-search/product-search";
 import { ThrowStmt } from "@angular/compiler";
+import { ProductDetailPage } from "../../pages/product-detail/product-detail";
 
 @Component({
   selector: "product-list",
@@ -26,7 +28,8 @@ export class ProductListComponent implements OnInit {
   constructor(
     private productHttp: ProductHttpProvider,
     public productSearch: ProductSearchProvider,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private app: App
   ) {}
 
   ngOnInit() {
@@ -96,5 +99,9 @@ export class ProductListComponent implements OnInit {
   reset() {
     this.page = 1;
     this.canMoreProducts = true;
+  }
+
+  openProductDetail(productId: number){
+    this.app.getRootNav().push(ProductDetailPage, {product: productId})
   }
 }

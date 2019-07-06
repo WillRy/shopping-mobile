@@ -4,7 +4,7 @@ import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 
 import { environment } from "@app/env";
-import { Product } from "../../app/model";
+import { Product, ProductPhoto } from "../../app/model";
 import { AuthProvider } from "../../providers/auth/auth";
 import { ProductSearchProvider } from "../../providers/product-search/product-search";
 
@@ -29,6 +29,12 @@ export class ProductHttpProvider{
     };
     const params = new HttpParams({fromObject:(<any>fromObject)});
     return this.http.get<{ data: Array<Product>; meta: any }>(this.baseUrl, {params});
+  }
+
+  get(id: number):Observable<{ product: Product; photos: ProductPhoto[]}>{
+    return this.http.get<{ data: any}>(`${this.baseUrl}/${id}`).pipe(
+      map(response => response.data)
+    )
   }
 
 

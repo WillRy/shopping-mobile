@@ -46,6 +46,7 @@ import { ProductSearchbarComponent } from '../components/product-searchbar/produ
 import { ProductSearchProvider } from '../providers/product-search/product-search';
 import { ProductSearchOptionsComponent } from '../components/product-search-options/product-search-options';
 import { CategoryHttpProvider } from '../providers/http/category-http';
+import { ProductDetailPage } from '../pages/product-detail/product-detail';
 
 
 function jwtFactory(authProvider: AuthProvider) {
@@ -76,7 +77,8 @@ function jwtFactory(authProvider: AuthProvider) {
     MoreOptionsComponent,
     ProductListComponent,
     ProductSearchbarComponent,
-    ProductSearchOptionsComponent
+    ProductSearchOptionsComponent,
+    ProductDetailPage
   ],
   imports: [
     BrowserModule,
@@ -109,7 +111,8 @@ function jwtFactory(authProvider: AuthProvider) {
     MoreOptionsComponent,
     ProductListComponent,
     ProductSearchbarComponent,
-    ProductSearchOptionsComponent
+    ProductSearchOptionsComponent,
+    ProductDetailPage
   ],
   providers: [
     StatusBar,

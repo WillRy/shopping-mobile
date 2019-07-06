@@ -85,3 +85,13 @@ export interface Category {
     date: string;
   };
 }
+export interface ProductPhoto {
+  id: number;
+  photo_url: string;
+  readonly created_at: {
+    date: string;
+  };
+  readonly updated_at: {
+    date: string;
+  };
+}
