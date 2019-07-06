@@ -2,6 +2,7 @@ import { Component } from "@angular/core";
 import { IonicPage, NavController, NavParams } from "ionic-angular";
 import { ProductHttpProvider } from "../../providers/http/product-http";
 import { Product, ProductPhoto } from "../../app/model";
+import { ProductPhotosPage } from "../product-photos/product-photos";
 
 /**
  * Generated class for the ProductDetailPage page.
@@ -32,5 +33,9 @@ export class ProductDetailPage {
     this.productHttp.get(this.productId).subscribe((product) => {
       this.productData = product;
     })
+  }
+
+  openPhotos(){
+    this.navCtrl.push(ProductPhotosPage, {product_data: this.productData});
   }
 }
