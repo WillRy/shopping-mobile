@@ -28,9 +28,11 @@ import {
   FirebaseMessaging
 } from '@ionic-native/firebase-messaging';
 import {
-  SuperTab
+  SuperTab,
+  SuperTabs
 } from 'ionic2-super-tabs';
 import { ChatInvitationProvider } from '../../providers/chat-invitation/chat-invitation';
+import { ProductListComponent } from '../../components/product-list/product-list';
 
 
 @IonicPage()
@@ -41,9 +43,14 @@ import { ChatInvitationProvider } from '../../providers/chat-invitation/chat-inv
 export class MainPage {
 
   chatGroupList = ChatGroupListComponent;
+  productList = ProductListComponent;
+  canShowSearchBar = false;
 
   @ViewChild('tabChatGroupList')
   tabChatGroupList: SuperTab
+
+  @ViewChild(SuperTabs)
+  superTabs: SuperTabs
 
   constructor(
     public navCtrl: NavController,
@@ -93,6 +100,17 @@ export class MainPage {
     popover.present({
       ev: event
     });
+  }
+
+  get canShowSearchIcon(){
+    const superTab = this.superTabs.getActiveTab();
+    return superTab.tabId === 'products';
+  }
+
+  onTabSelect(event){
+    if(event.id !== "products"){
+      this.canShowSearchBar = false;
+    }
   }
 
 }

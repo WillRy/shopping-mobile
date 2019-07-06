@@ -5,7 +5,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SuperTabsModule } from "ionic2-super-tabs";
-
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
@@ -41,6 +40,14 @@ import { PushNotificationProvider } from '../providers/push-notification/push-no
 import { UserProfileHttp } from '../providers/http/user-profile-http';
 import { FirebaseDynamicLinks } from '@ionic-native/firebase-dynamic-links';
 import { ChatInvitationProvider } from '../providers/chat-invitation/chat-invitation';
+import { ProductListComponent } from '../components/product-list/product-list';
+import { ProductHttpProvider } from '../providers/http/product-http';
+import { ProductSearchbarComponent } from '../components/product-searchbar/product-searchbar';
+import { ProductSearchProvider } from '../providers/product-search/product-search';
+import { ProductSearchOptionsComponent } from '../components/product-search-options/product-search-options';
+import { CategoryHttpProvider } from '../providers/http/category-http';
+import { ProductDetailPage } from '../pages/product-detail/product-detail';
+import { ProductPhotosPage } from '../pages/product-photos/product-photos';
 
 
 function jwtFactory(authProvider: AuthProvider) {
@@ -68,7 +75,12 @@ function jwtFactory(authProvider: AuthProvider) {
     ChatGroupListComponent,
     FirebasePhoneNumberCheckComponent,
     SelectCountriesCodeComponent,
-    MoreOptionsComponent
+    MoreOptionsComponent,
+    ProductListComponent,
+    ProductSearchbarComponent,
+    ProductSearchOptionsComponent,
+    ProductDetailPage,
+    ProductPhotosPage
   ],
   imports: [
     BrowserModule,
@@ -98,7 +110,12 @@ function jwtFactory(authProvider: AuthProvider) {
     MainPage,
     ChatGroupListComponent,
     FirebasePhoneNumberCheckComponent,
-    MoreOptionsComponent
+    MoreOptionsComponent,
+    ProductListComponent,
+    ProductSearchbarComponent,
+    ProductSearchOptionsComponent,
+    ProductDetailPage,
+    ProductPhotosPage
   ],
   providers: [
     StatusBar,
@@ -125,7 +142,10 @@ function jwtFactory(authProvider: AuthProvider) {
     PushNotificationProvider,
     UserProfileHttp,
     FirebaseDynamicLinks,
-    ChatInvitationProvider
+    ChatInvitationProvider,
+    ProductHttpProvider,
+    ProductSearchProvider,
+    CategoryHttpProvider
   ]
 })
 export class AppModule {}
