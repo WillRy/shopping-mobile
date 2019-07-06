@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { ProductSearchProvider } from '../../providers/product-search/product-search';
+import { ModalController } from 'ionic-angular';
+import { ProductSearchOptionsComponent } from '../product-search-options/product-search-options';
 
 
 @Component({
@@ -11,7 +13,10 @@ export class ProductSearchbarComponent {
   @Output()
   onBack: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor(public productSearch: ProductSearchProvider) {
+  constructor(
+    public productSearch: ProductSearchProvider,
+    private modalCtrl: ModalController
+    ) {
 
   }
 
@@ -21,5 +26,10 @@ export class ProductSearchbarComponent {
 
   back(){
     this.onBack.emit(true);
+  }
+
+  openProductSearchOptions(){
+   const modal = this.modalCtrl.create(ProductSearchOptionsComponent);
+   modal.present();
   }
 }

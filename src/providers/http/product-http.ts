@@ -23,7 +23,9 @@ export class ProductHttpProvider{
   ): Observable<{ data: Array<Product>; meta: any }> {
     const fromObject = {
       page,
-      search: this.productSearchProvider.options.search
+      'categories[]': this.productSearchProvider.options.categories,
+      sort: this.productSearchProvider.options.orderBy === 'latest' ? '-created_at' : 'created_at',
+      search: this.productSearchProvider.options.search,
     };
     const params = new HttpParams({fromObject:(<any>fromObject)});
     return this.http.get<{ data: Array<Product>; meta: any }>(this.baseUrl, {params});

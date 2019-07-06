@@ -44,6 +44,8 @@ import { ProductListComponent } from '../components/product-list/product-list';
 import { ProductHttpProvider } from '../providers/http/product-http';
 import { ProductSearchbarComponent } from '../components/product-searchbar/product-searchbar';
 import { ProductSearchProvider } from '../providers/product-search/product-search';
+import { ProductSearchOptionsComponent } from '../components/product-search-options/product-search-options';
+import { CategoryHttpProvider } from '../providers/http/category-http';
 
 
 function jwtFactory(authProvider: AuthProvider) {
@@ -73,7 +75,8 @@ function jwtFactory(authProvider: AuthProvider) {
     SelectCountriesCodeComponent,
     MoreOptionsComponent,
     ProductListComponent,
-    ProductSearchbarComponent
+    ProductSearchbarComponent,
+    ProductSearchOptionsComponent
   ],
   imports: [
     BrowserModule,
@@ -105,7 +108,8 @@ function jwtFactory(authProvider: AuthProvider) {
     FirebasePhoneNumberCheckComponent,
     MoreOptionsComponent,
     ProductListComponent,
-    ProductSearchbarComponent
+    ProductSearchbarComponent,
+    ProductSearchOptionsComponent
   ],
   providers: [
     StatusBar,
@@ -134,7 +138,8 @@ function jwtFactory(authProvider: AuthProvider) {
     FirebaseDynamicLinks,
     ChatInvitationProvider,
     ProductHttpProvider,
-    ProductSearchProvider
+    ProductSearchProvider,
+    CategoryHttpProvider
   ]
 })
 export class AppModule {}
