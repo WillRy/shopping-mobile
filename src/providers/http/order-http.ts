@@ -39,4 +39,12 @@ export class OrderHttpProvider {
       )
     );
   }
+
+  cancel(id: number):Observable<Order>{
+    return this.http.put<{data: Order}>(`${this.baseUrl}/${id}`,{}).pipe(
+      map(
+        response => response.data
+      )
+    );
+  }
 }
