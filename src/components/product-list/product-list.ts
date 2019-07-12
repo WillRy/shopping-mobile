@@ -74,7 +74,7 @@ export class ProductListComponent implements OnInit {
     this.getProducts().subscribe(
       products => {
         this.products.data.push(...products.data);
-        if (products.data.length) {
+        if (!products.data.length) {
           this.canMoreProducts = false;
         }
         infiniteScroll.complete();

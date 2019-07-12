@@ -41,6 +41,7 @@ import { UserProfileHttp } from '../providers/http/user-profile-http';
 import { FirebaseDynamicLinks } from '@ionic-native/firebase-dynamic-links';
 import { ChatInvitationProvider } from '../providers/chat-invitation/chat-invitation';
 import { ProductListComponent } from '../components/product-list/product-list';
+import { OrderListComponent } from '../components/order-list/order-list';
 import { ProductHttpProvider } from '../providers/http/product-http';
 import { ProductSearchbarComponent } from '../components/product-searchbar/product-searchbar';
 import { ProductSearchProvider } from '../providers/product-search/product-search';
@@ -48,6 +49,7 @@ import { ProductSearchOptionsComponent } from '../components/product-search-opti
 import { CategoryHttpProvider } from '../providers/http/category-http';
 import { ProductDetailPage } from '../pages/product-detail/product-detail';
 import { ProductPhotosPage } from '../pages/product-photos/product-photos';
+import { OrderHttpProvider } from '../providers/http/order-http';
 
 
 function jwtFactory(authProvider: AuthProvider) {
@@ -80,7 +82,8 @@ function jwtFactory(authProvider: AuthProvider) {
     ProductSearchbarComponent,
     ProductSearchOptionsComponent,
     ProductDetailPage,
-    ProductPhotosPage
+    ProductPhotosPage,
+    OrderListComponent
   ],
   imports: [
     BrowserModule,
@@ -115,7 +118,8 @@ function jwtFactory(authProvider: AuthProvider) {
     ProductSearchbarComponent,
     ProductSearchOptionsComponent,
     ProductDetailPage,
-    ProductPhotosPage
+    ProductPhotosPage,
+    OrderListComponent
   ],
   providers: [
     StatusBar,
@@ -145,7 +149,8 @@ function jwtFactory(authProvider: AuthProvider) {
     ChatInvitationProvider,
     ProductHttpProvider,
     ProductSearchProvider,
-    CategoryHttpProvider
+    CategoryHttpProvider,
+    OrderHttpProvider
   ]
 })
 export class AppModule {}

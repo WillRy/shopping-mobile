@@ -15,7 +15,8 @@
 
 <ion-content class="hide-scroll-content">
   <super-tabs toolbarBackground="green-dark" toolbarColor="light" indicatorColor="light" (tabSelect)="onTabSelect($event)">
-    <super-tab id="products" [root]="productList" title="Produtos"></super-tab>
     <super-tab id="groups" [root]="chatGroupList" title="Grupos" #tabChatGroupList></super-tab>
+    <super-tab id="products" [root]="productList" title="Produtos"></super-tab>
+    <super-tab id="orders" [root]="orderList" title="Pedidos"></super-tab>
   </super-tabs>
 </ion-content>
