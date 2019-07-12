@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-navbar color="green-dark">
+    <ion-title
+      >#{{ order.id }} | {{ order.total | numberFormatBr }} -
+      {{ order.product.name }}</ion-title
+    >
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-card>
+    <ion-card-title>
+      <h3>
+        STATUS
+      </h3>
+    </ion-card-title>
+    <img [src]="order.product.photo_url" alt="" />
+    <ion-card-content>
+      <h2>
+        <strong>{{ order.product.name }}</strong>
+      </h2>
+      <p>
+        <strong>Quant.: {{ order.amount }}</strong>
+      </p>
+      <p>{{ order.product.description }}</p>
+      <div text-center *ngIf="order.payment_link">
+        <button ion-button color="green-dark" outline>
+          Copiar link de pagamento
+        </button>
+      </div>
+      <p text-center *ngIf="order.status === STATUS_ENUM.STATUS_PENDING">
+        <button ion-button color="danger">
+          Cancelar
+        </button>
+      </p>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
