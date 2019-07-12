@@ -7,7 +7,7 @@ import {
   LoadingController,
   ToastController
 } from 'ionic-angular';
-import { Product } from 'app/model';
+import { Product } from '../../app/model';
 import { OrderHttpProvider } from '../../providers/http/order-http';
 
 /**
@@ -54,7 +54,7 @@ export class OrderStorePage {
             duration: 7000
           });
           toast.present();
-          this.viewCtrl.dismiss();
+          this.viewCtrl.dismiss(order);
         },
         error => {
           loader.dismiss();
