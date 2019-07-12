@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { Order } from 'app/model';
+import { Order } from '../../app/model';
 import { OrderHttpProvider } from '../../providers/http/order-http';
-import { InfiniteScroll, Refresher } from 'ionic-angular';
+import { InfiniteScroll, Refresher, NavParams } from 'ionic-angular';
+import { OrderDetailPage } from '../../pages/order-detail/order-detail';
 
 /**
  * Generated class for the OrderListComponent component.
@@ -21,7 +22,7 @@ export class OrderListComponent {
 
   page = 1;
   canMoreOrders = true;
-  constructor(private orderHttp: OrderHttpProvider) {
+  constructor(private orderHttp: OrderHttpProvider, public navParams: NavParams) {
 
   }
 
@@ -67,5 +68,11 @@ export class OrderListComponent {
   reset() {
     this.page = 1;
     this.canMoreOrders = true;
+  }
+
+  openOrderDetail(order){
+    const navRoot = this.navParams.get('rootNavCtrl');
+    console.log(navRoot);
+    navRoot.push(OrderDetailPage, {order});
   }
 }
