@@ -9,9 +9,9 @@
 
 <ion-content padding>
   <ion-card>
-    <ion-card-title>
+    <ion-card-title text-center>
       <h3>
-        STATUS
+          <order-status [status]="order.status"></order-status>
       </h3>
     </ion-card-title>
     <img [src]="order.product.photo_url" alt="" />
@@ -29,7 +29,7 @@
         </button>
       </div>
       <p text-center *ngIf="order.status === STATUS_ENUM.STATUS_PENDING">
-        <button ion-button color="danger">
+        <button ion-button color="danger" (click)="cancel()">
           Cancelar
         </button>
       </p>
