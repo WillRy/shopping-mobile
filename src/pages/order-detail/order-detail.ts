@@ -2,13 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, ToastController } from 'ionic-angular';
 import { Order, OrderStatus } from '../../app/model';
 import { OrderHttpProvider } from '../../providers/http/order-http';
-
-/**
- * Generated class for the OrderDetailPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { Clipboard } from '@ionic-native/clipboard';
 
 @IonicPage()
 @Component({
@@ -25,7 +19,8 @@ export class OrderDetailPage {
     public navParams: NavParams,
     private loadingCtrl: LoadingController,
     private orderHttp: OrderHttpProvider,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private clipboard: Clipboard
     ) {
     this.order = this.navParams.get('order');
   }
@@ -54,4 +49,12 @@ export class OrderDetailPage {
     })
   }
 
+  copy(){
+    this.clipboard.copy(this.order.payment_link);
+    const toast = this.toastCtrl.create({
+      message: "Link de pagamento copiado",
+      duration: 3000
+    });
+    toast.present();
+  }
 }

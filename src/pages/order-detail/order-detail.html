@@ -24,7 +24,7 @@
       </p>
       <p>{{ order.product.description }}</p>
       <div text-center *ngIf="order.payment_link">
-        <button ion-button color="green-dark" outline>
+        <button ion-button color="green-dark" outline (click)="copy()">
           Copiar link de pagamento
         </button>
       </div>
