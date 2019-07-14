@@ -50,8 +50,8 @@ export class RefreshTokenInterceptor implements HttpInterceptor {
         .refresh()
         .pipe(
           flatMap(data => {
-            const obs = this._jwtInterceptor.intercept(req, next);
-            this.setPipes(obs);
+            let obs = this._jwtInterceptor.intercept(req, next);
+            obs = this.setPipes(obs);
             return obs;
           })
         )
@@ -64,13 +64,13 @@ export class RefreshTokenInterceptor implements HttpInterceptor {
   }
 
   private handleRequest(req: HttpRequest < any > , next: HttpHandler) {
-    const obs = next.handle(req);
-    this.setPipes(obs);
+    let obs = next.handle(req);
+    obs = this.setPipes(obs);
     return obs;
   }
 
   private setPipes(observable: Observable < any > ) {
-    observable.pipe(
+    return observable.pipe(
       tap((event: HttpEvent < any > ) => {
         console.log(event);
         this.setNewTokenIfResponseValid(event);
