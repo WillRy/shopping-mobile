@@ -119,9 +119,13 @@ export class AuthProvider {
         token: string
       } > (this.refreshUrl(), {})
       .pipe(
-        tap(data => {
+        tap(
+          data => {
           this.setToken(data.token)
-        })
+          },
+          error => {
+            this.setToken(null);
+          })
       )
   }
 
