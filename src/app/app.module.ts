@@ -55,7 +55,7 @@ import { OrderDetailPage } from '../pages/order-detail/order-detail';
 import { OrderStatusComponent } from '../components/order-status/order-status';
 import { Clipboard } from '@ionic-native/clipboard';
 
-function jwtFactory(authProvider: AuthProvider) {
+export function jwtFactory(authProvider: AuthProvider) {
   return {
     tokenGetter: () => {
       return authProvider.getToken();
