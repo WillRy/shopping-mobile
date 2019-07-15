@@ -29,7 +29,7 @@ export class ProductSearchbarComponent {
   }
 
   openProductSearchOptions(){
-   const modal = this.modalCtrl.create(ProductSearchOptionsComponent);
+   const modal = this.modalCtrl.create('ProductSearchOptionsComponent');
    modal.present();
   }
 }

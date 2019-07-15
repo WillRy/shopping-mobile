@@ -33,7 +33,6 @@ import { FirebaseDynamicLinks } from '@ionic-native/firebase-dynamic-links';
 import { ChatInvitationProvider } from '../providers/chat-invitation/chat-invitation';
 import { ProductHttpProvider } from '../providers/http/product-http';
 import { ProductSearchProvider } from '../providers/product-search/product-search';
-import { ProductSearchOptionsComponent } from '../components/product-search-options/product-search-options';
 import { CategoryHttpProvider } from '../providers/http/category-http';
 import { ProductDetailPage } from '../pages/product-detail/product-detail';
 import { ProductPhotosPage } from '../pages/product-photos/product-photos';
@@ -61,7 +60,6 @@ export function jwtFactory(authProvider: AuthProvider) {
     HomePage,
     ListPage,
     MoreOptionsComponent,
-    ProductSearchOptionsComponent,
     ProductDetailPage,
     ProductPhotosPage,
     OrderStorePage,
@@ -88,7 +86,6 @@ export function jwtFactory(authProvider: AuthProvider) {
     HomePage,
     ListPage,
     MoreOptionsComponent,
-    ProductSearchOptionsComponent,
     ProductDetailPage,
     ProductPhotosPage,
     OrderStorePage,
