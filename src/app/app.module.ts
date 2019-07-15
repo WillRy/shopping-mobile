@@ -3,11 +3,9 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
-import { SuperTabsModule } from "ionic2-super-tabs";
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
-import { MainPage } from './../pages/main/main';
 import { CustomerCreatePage } from '../pages/customer-create/customer-create';
 import {JwtModule, JWT_OPTIONS} from '@auth0/angular-jwt';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -16,7 +14,6 @@ import { FirebaseAuthProvider } from '../providers/auth/firebase-auth';
 import { AuthProvider } from '../providers/auth/auth';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CustomerHttpProvider } from '../providers/http/customer-http';
-import { ChatGroupListComponent } from '../components/chat-group-list/chat-group-list';
 import { ChatMessageHttpProvider } from '../providers/http/chat-messag-http';
 import {environment} from '@app/env';
 import {Media} from "@ionic-native/media";
@@ -35,10 +32,7 @@ import { PushNotificationProvider } from '../providers/push-notification/push-no
 import { UserProfileHttp } from '../providers/http/user-profile-http';
 import { FirebaseDynamicLinks } from '@ionic-native/firebase-dynamic-links';
 import { ChatInvitationProvider } from '../providers/chat-invitation/chat-invitation';
-import { ProductListComponent } from '../components/product-list/product-list';
-import { OrderListComponent } from '../components/order-list/order-list';
 import { ProductHttpProvider } from '../providers/http/product-http';
-import { ProductSearchbarComponent } from '../components/product-searchbar/product-searchbar';
 import { ProductSearchProvider } from '../providers/product-search/product-search';
 import { ProductSearchOptionsComponent } from '../components/product-search-options/product-search-options';
 import { CategoryHttpProvider } from '../providers/http/category-http';
@@ -46,9 +40,9 @@ import { ProductDetailPage } from '../pages/product-detail/product-detail';
 import { ProductPhotosPage } from '../pages/product-photos/product-photos';
 import { OrderHttpProvider } from '../providers/http/order-http';
 import { OrderStorePage } from '../pages/order-store/order-store';
-import { OrderDetailPage } from '../pages/order-detail/order-detail';
-import { OrderStatusComponent } from '../components/order-status/order-status';
+
 import { Clipboard } from '@ionic-native/clipboard';
+import { SuperTabsModule } from 'ionic2-super-tabs';
 
 export function jwtFactory(authProvider: AuthProvider) {
   return {
@@ -68,25 +62,17 @@ export function jwtFactory(authProvider: AuthProvider) {
     HomePage,
     ListPage,
     CustomerCreatePage,
-    MainPage,
-    ChatGroupListComponent,
     MoreOptionsComponent,
-    ProductListComponent,
-    ProductSearchbarComponent,
     ProductSearchOptionsComponent,
     ProductDetailPage,
     ProductPhotosPage,
-    OrderListComponent,
     OrderStorePage,
-    OrderDetailPage,
-    OrderStatusComponent
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
     HttpClientModule,
     ReactiveFormsModule,
-    SuperTabsModule.forRoot(),
     JwtModule.forRoot({
       jwtOptionsProvider: {
         provide: JWT_OPTIONS,
@@ -94,6 +80,7 @@ export function jwtFactory(authProvider: AuthProvider) {
         deps: [AuthProvider]
       }
     }),
+    SuperTabsModule.forRoot(),
     PipesModule,
     DirectivesModule
   ],
@@ -103,18 +90,12 @@ export function jwtFactory(authProvider: AuthProvider) {
     HomePage,
     ListPage,
     CustomerCreatePage,
-    MainPage,
-    ChatGroupListComponent,
     MoreOptionsComponent,
-    ProductListComponent,
-    ProductSearchbarComponent,
     ProductSearchOptionsComponent,
     ProductDetailPage,
     ProductPhotosPage,
-    OrderListComponent,
     OrderStorePage,
-    OrderDetailPage,
-    OrderStatusComponent
+
   ],
   providers: [
     StatusBar,

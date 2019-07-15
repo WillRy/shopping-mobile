@@ -1,4 +1,3 @@
-import { MainPage } from '../main/main';
 import { CustomerHttpProvider } from './../../providers/http/customer-http';
 import {
   Component,
@@ -60,7 +59,7 @@ export class CustomerCreatePage {
     this.customerHttp.create(this.form.value)
     .subscribe(() => {
       loader.dismiss();
-      this.navCtrl.setRoot(MainPage);
+      this.navCtrl.setRoot('MainPage');
     },
     (error)=>{
       loader.dismiss();

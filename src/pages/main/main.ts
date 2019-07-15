@@ -32,8 +32,7 @@ import {
   SuperTabs
 } from 'ionic2-super-tabs';
 import { ChatInvitationProvider } from '../../providers/chat-invitation/chat-invitation';
-import { ProductListComponent } from '../../components/product-list/product-list';
-import { OrderListComponent } from '../../components/order-list/order-list';
+
 
 
 @IonicPage()
@@ -43,9 +42,9 @@ import { OrderListComponent } from '../../components/order-list/order-list';
 })
 export class MainPage {
 
-  orderList = OrderListComponent;
-  chatGroupList = ChatGroupListComponent;
-  productList = ProductListComponent;
+  orderList = 'OrderListComponent';
+  chatGroupList = 'ChatGroupListComponent';
+  productList = 'ProductListComponent';
 
   canShowSearchBar = false;
 

@@ -90,7 +90,7 @@ export class LoginPhoneNumberPage {
   }
 
   redirectToMainPage() {
-    this.navCtrl.setRoot(MainPage);
+    this.navCtrl.setRoot('MainPage');
   }
 
   redirectToCustomerCreatePage() {

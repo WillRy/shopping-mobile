@@ -3,20 +3,33 @@ import { FirebasePhoneNumberCheckComponent } from './firebase-phone-number-check
 import { PipesModule } from '../pipes/pipes.module';
 import { IonicModule } from 'ionic-angular';
 import { SelectCountriesCodeComponent } from './select-countries-code/select-countries-code';
+import { ProductSearchbarComponent } from './product-searchbar/product-searchbar';
+import { ChatGroupListComponent } from './chat-group-list/chat-group-list';
+import { ProductListComponent } from './product-list/product-list';
+import { DirectivesModule } from '../directives/directives.module';
+import { ProductListModule } from './product-list/product-list.module';
+import { ChatGroupListModule } from './chat-group-list/chat-group-list.module';
+import { OrderStatusComponent } from './order-status/order-status';
 
 
 @NgModule({
 	declarations: [
     SelectCountriesCodeComponent,
-    FirebasePhoneNumberCheckComponent
+    FirebasePhoneNumberCheckComponent,
+    ProductSearchbarComponent,
+    OrderStatusComponent
   ],
 	imports: [
     IonicModule,
-    PipesModule
+    PipesModule,
+    DirectivesModule,
+
   ],
   exports: [
     SelectCountriesCodeComponent,
-    FirebasePhoneNumberCheckComponent
+    FirebasePhoneNumberCheckComponent,
+    ProductSearchbarComponent,
+    OrderStatusComponent
   ]
 })
 export class ComponentsModule {}

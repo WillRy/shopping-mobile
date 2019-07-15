@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Order } from '../../app/model';
 import { OrderHttpProvider } from '../../providers/http/order-http';
 import { InfiniteScroll, Refresher, NavParams } from 'ionic-angular';
-import { OrderDetailPage } from '../../pages/order-detail/order-detail';
+import { IonicPage } from 'ionic-angular/navigation/ionic-page';
 
 /**
  * Generated class for the OrderListComponent component.
@@ -10,6 +10,7 @@ import { OrderDetailPage } from '../../pages/order-detail/order-detail';
  * See https://angular.io/api/core/Component for more info on Angular
  * Components.
  */
+@IonicPage()
 @Component({
   selector: 'order-list',
   templateUrl: 'order-list.html'
@@ -73,6 +74,6 @@ export class OrderListComponent {
   openOrderDetail(order){
     const navRoot = this.navParams.get('rootNavCtrl');
     console.log(navRoot);
-    navRoot.push(OrderDetailPage, {order});
+    navRoot.push('OrderDetailPage', {order});
   }
 }
