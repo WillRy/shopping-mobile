@@ -1,9 +1,9 @@
 import { AuthProvider } from './../../providers/auth/auth';
 import { Component } from '@angular/core';
-import { App } from 'ionic-angular';
+import { App, IonicPage } from 'ionic-angular';
 import { ViewController } from 'ionic-angular/navigation/view-controller';
 
-
+@IonicPage()
 @Component({
   selector: 'more-options',
   templateUrl: 'more-options.html'

@@ -39,7 +39,7 @@ export class ProductDetailPage {
   }
 
   openPhotos(){
-    this.navCtrl.push(ProductPhotosPage, {product_data: this.productData});
+    this.navCtrl.push('ProductPhotosPage', {product_data: this.productData});
   }
 
   openOrderStore(){

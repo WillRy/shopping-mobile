@@ -1,4 +1,3 @@
-import { MoreOptionsComponent } from './../components/more-options/more-options';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
@@ -34,8 +33,6 @@ import { ChatInvitationProvider } from '../providers/chat-invitation/chat-invita
 import { ProductHttpProvider } from '../providers/http/product-http';
 import { ProductSearchProvider } from '../providers/product-search/product-search';
 import { CategoryHttpProvider } from '../providers/http/category-http';
-import { ProductDetailPage } from '../pages/product-detail/product-detail';
-import { ProductPhotosPage } from '../pages/product-photos/product-photos';
 import { OrderHttpProvider } from '../providers/http/order-http';
 import { OrderStorePage } from '../pages/order-store/order-store';
 
@@ -59,9 +56,6 @@ export function jwtFactory(authProvider: AuthProvider) {
     MyApp,
     HomePage,
     ListPage,
-    MoreOptionsComponent,
-    ProductDetailPage,
-    ProductPhotosPage,
     OrderStorePage,
   ],
   imports: [
@@ -85,9 +79,6 @@ export function jwtFactory(authProvider: AuthProvider) {
     MyApp,
     HomePage,
     ListPage,
-    MoreOptionsComponent,
-    ProductDetailPage,
-    ProductPhotosPage,
     OrderStorePage,
 
   ],

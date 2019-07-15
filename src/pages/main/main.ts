@@ -1,8 +1,5 @@
 import { ToastController } from 'ionic-angular';
 import {
-  MoreOptionsComponent
-} from './../../components/more-options/more-options';
-import {
   AudioRecorderProvider
 } from '../../providers/audio-recorder/audio-recorder';
 import {
@@ -98,7 +95,7 @@ export class MainPage {
   }
 
   presentMoreOptions(event) {
-    const popover = this.popover.create(MoreOptionsComponent);
+    const popover = this.popover.create('MoreOptionsComponent');
     popover.present({
       ev: event
     });
