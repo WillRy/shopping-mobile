@@ -11,7 +11,6 @@ import { ListPage } from '../pages/list/list';
 import { MainPage } from './../pages/main/main';
 import { ResetPhoneNumberPage } from './../pages/reset-phone-number/reset-phone-number';
 import { LoginPhoneNumberPage } from './../pages/login-phone-number/login-phone-number';
-import { LoginOptionsPage } from './../pages/login-options/login-options';
 import { CustomerCreatePage } from '../pages/customer-create/customer-create';
 import {JwtModule, JWT_OPTIONS} from '@auth0/angular-jwt';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -72,7 +71,6 @@ export function jwtFactory(authProvider: AuthProvider) {
     MyApp,
     HomePage,
     ListPage,
-    LoginOptionsPage,
     LoginPhoneNumberPage,
     ResetPhoneNumberPage,
     CustomerCreatePage,
@@ -112,7 +110,6 @@ export function jwtFactory(authProvider: AuthProvider) {
     MyApp,
     HomePage,
     ListPage,
-    LoginOptionsPage,
     LoginPhoneNumberPage,
     ResetPhoneNumberPage,
     CustomerCreatePage,

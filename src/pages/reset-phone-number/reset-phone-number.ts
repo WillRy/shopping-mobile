@@ -82,7 +82,7 @@ export class ResetPhoneNumberPage {
           buttons: [{
             text: 'Ok',
             handler: ()=> {
-              this.navCtrl.setRoot(LoginOptionsPage)
+              this.navCtrl.setRoot('LoginOptionsPage')
             }
           }]
         });

@@ -1,7 +1,6 @@
 import { AuthProvider } from './../../providers/auth/auth';
 import { Component } from '@angular/core';
 import { App } from 'ionic-angular';
-import { LoginOptionsPage } from '../../pages/login-options/login-options';
 import { ViewController } from 'ionic-angular/navigation/view-controller';
 
 
@@ -20,7 +19,7 @@ export class MoreOptionsComponent {
   logout(){
     this.auth.logout().subscribe(()=>{
       this.viewCtrl.dismiss();
-      this.app.getRootNav().setRoot(LoginOptionsPage);
+      this.app.getRootNav().setRoot('LoginOptionsPage');
     }, (error)=> console.log(error))
   }
 

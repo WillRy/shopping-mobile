@@ -9,5 +9,8 @@ import { LoginOptionsPage } from './login-options';
   imports: [
     IonicPageModule.forChild(LoginOptionsPage),
   ],
+  exports: [
+    LoginOptionsPage
+  ]
 })
 export class LoginOptionsPageModule {}
