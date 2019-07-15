@@ -44,10 +44,10 @@ export class ProductDetailPage {
 
   openOrderStore(){
     if(this.productData){
-      const modal = this.modalCtrl.create(OrderStorePage, {product: this.productData.product});
+      const modal = this.modalCtrl.create('OrderStorePage', {product: this.productData.product});
       modal.onWillDismiss(result => {
         if(result){
-          this.navCtrl.push(OrderDetailPage, {order: result});
+          this.navCtrl.push('OrderDetailPage', {order: result});
         }
       });
       modal.present();

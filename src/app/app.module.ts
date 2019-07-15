@@ -34,7 +34,6 @@ import { ProductHttpProvider } from '../providers/http/product-http';
 import { ProductSearchProvider } from '../providers/product-search/product-search';
 import { CategoryHttpProvider } from '../providers/http/category-http';
 import { OrderHttpProvider } from '../providers/http/order-http';
-import { OrderStorePage } from '../pages/order-store/order-store';
 
 import { Clipboard } from '@ionic-native/clipboard';
 import { SuperTabsModule } from 'ionic2-super-tabs';
@@ -56,7 +55,6 @@ export function jwtFactory(authProvider: AuthProvider) {
     MyApp,
     HomePage,
     ListPage,
-    OrderStorePage,
   ],
   imports: [
     BrowserModule,
@@ -79,7 +77,6 @@ export function jwtFactory(authProvider: AuthProvider) {
     MyApp,
     HomePage,
     ListPage,
-    OrderStorePage,
 
   ],
   providers: [
