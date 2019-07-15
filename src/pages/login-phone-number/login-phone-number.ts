@@ -94,7 +94,7 @@ export class LoginPhoneNumberPage {
   }
 
   redirectToCustomerCreatePage() {
-    this.navCtrl.push(CustomerCreatePage);
+    this.navCtrl.push('CustomerCreatePage');
   }
 
 }
