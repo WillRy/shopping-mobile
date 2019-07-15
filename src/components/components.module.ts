@@ -1,18 +1,22 @@
 import { NgModule } from '@angular/core';
 import { FirebasePhoneNumberCheckComponent } from './firebase-phone-number-check/firebase-phone-number-check';
+import { PipesModule } from '../pipes/pipes.module';
+import { IonicModule } from 'ionic-angular';
 import { SelectCountriesCodeComponent } from './select-countries-code/select-countries-code';
-import { ProductSearchbarComponent } from './product-searchbar/product-searchbar';
-import { ProductSearchOptionsComponent } from './product-search-options/product-search-options';
-import { OrderListComponent } from './order-list/order-list';
 
 
 @NgModule({
 	declarations: [
-
+    SelectCountriesCodeComponent,
+    FirebasePhoneNumberCheckComponent
   ],
-	imports: [],
+	imports: [
+    IonicModule,
+    PipesModule
+  ],
   exports: [
-
+    SelectCountriesCodeComponent,
+    FirebasePhoneNumberCheckComponent
   ]
 })
 export class ComponentsModule {}

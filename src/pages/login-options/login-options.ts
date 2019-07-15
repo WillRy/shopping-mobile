@@ -59,20 +59,20 @@ export class LoginOptionsPage {
         {
           text: 'Já tenho, quero entrar',
           handler: () => {
-            this.navCtrl.push(LoginPhoneNumberPage)
+            this.navCtrl.push('LoginPhoneNumberPage')
           }
 
         },
         {
           text: 'Já tenho, quero trocar de telefone',
           handler: () => {
-            this.navCtrl.push(ResetPhoneNumberPage)
+            this.navCtrl.push('ResetPhoneNumberPage')
           }
         },
         {
           text: 'Não tenho, quero criar uma conta',
           handler: () => {
-            this.navCtrl.push(LoginPhoneNumberPage)
+            this.navCtrl.push('LoginPhoneNumberPage')
           }
         },
         {
