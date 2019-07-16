@@ -2,9 +2,6 @@ import { Component } from "@angular/core";
 import { IonicPage, NavController, NavParams, ModalController } from "ionic-angular";
 import { ProductHttpProvider } from "../../providers/http/product-http";
 import { Product, ProductPhoto } from "../../app/model";
-import { ProductPhotosPage } from "../product-photos/product-photos";
-import { OrderStorePage } from "../order-store/order-store";
-import { OrderDetailPage } from "../order-detail/order-detail";
 
 /**
  * Generated class for the ProductDetailPage page.

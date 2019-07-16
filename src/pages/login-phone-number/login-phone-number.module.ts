@@ -1,5 +1,5 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { IonicPageModule, IonicModule } from 'ionic-angular';
+import { NgModule } from '@angular/core';
+import { IonicPageModule } from 'ionic-angular';
 import { LoginPhoneNumberPage } from './login-phone-number';
 import { ComponentsModule } from '../../components/components.module';
 
@@ -9,7 +9,6 @@ import { ComponentsModule } from '../../components/components.module';
     LoginPhoneNumberPage,
   ],
   imports: [
-    IonicModule,
     IonicPageModule.forChild(LoginPhoneNumberPage),
     ComponentsModule
   ]

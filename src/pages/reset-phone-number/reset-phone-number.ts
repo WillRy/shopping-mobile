@@ -14,11 +14,9 @@ import {
   LoadingController
 } from 'ionic-angular';
 import {
-  FormGroup,
   FormControl,
   Validators
 } from '@angular/forms';
-import { LoginOptionsPage } from '../login-options/login-options';
 import { environment } from './../../environments/environment';
 
 /**

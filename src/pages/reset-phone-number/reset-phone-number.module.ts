@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { IonicPageModule, IonicModule } from 'ionic-angular';
+import { IonicPageModule } from 'ionic-angular';
 import { ResetPhoneNumberPage } from './reset-phone-number';
 import { ComponentsModule } from '../../components/components.module';
 
@@ -8,7 +8,6 @@ import { ComponentsModule } from '../../components/components.module';
     ResetPhoneNumberPage,
   ],
   imports: [
-    IonicModule,
     IonicPageModule.forChild(ResetPhoneNumberPage),
     ComponentsModule
   ],
