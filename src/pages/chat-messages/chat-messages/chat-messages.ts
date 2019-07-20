@@ -22,9 +22,6 @@ import {
 import {
   ChatMessage
 } from '../../../app/model';
-import {
-  Observable
-} from 'rxjs/Observable';
 import { RedirectIfNotAuthProvider } from '../../../providers/redirect-if-not-auth/redirect-if-not-auth';
 
 @IonicPage()

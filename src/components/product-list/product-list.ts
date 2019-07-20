@@ -12,7 +12,9 @@ import {
 import { ProductSearchProvider } from "../../providers/product-search/product-search";
 import { ThrowStmt } from "@angular/compiler";
 import { ProductDetailPage } from "../../pages/product-detail/product-detail";
+import { IonicPage } from "ionic-angular/navigation/ionic-page";
 
+@IonicPage()
 @Component({
   selector: "product-list",
   templateUrl: "product-list.html"
@@ -102,6 +104,6 @@ export class ProductListComponent implements OnInit {
   }
 
   openProductDetail(productId: number){
-    this.app.getRootNav().push(ProductDetailPage, {product: productId})
+    this.app.getRootNav().push('ProductDetailPage', {product: productId})
   }
 }

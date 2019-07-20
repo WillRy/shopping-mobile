@@ -14,11 +14,9 @@ import {
   LoadingController
 } from 'ionic-angular';
 import {
-  FormGroup,
   FormControl,
   Validators
 } from '@angular/forms';
-import { LoginOptionsPage } from '../login-options/login-options';
 import { environment } from './../../environments/environment';
 
 /**
@@ -82,7 +80,7 @@ export class ResetPhoneNumberPage {
           buttons: [{
             text: 'Ok',
             handler: ()=> {
-              this.navCtrl.setRoot(LoginOptionsPage)
+              this.navCtrl.setRoot('LoginOptionsPage')
             }
           }]
         });

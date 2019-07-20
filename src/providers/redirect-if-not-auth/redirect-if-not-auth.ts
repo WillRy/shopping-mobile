@@ -37,7 +37,7 @@ export class RedirectIfNotAuthProvider {
       .then(isAuth => {
         if (!isAuth) {
           setTimeout(() => {
-            this.app.getRootNav().setRoot(LoginOptionsPage);
+            this.app.getRootNav().setRoot('LoginOptionsPage');
           })
         }
 

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { ResetPhoneNumberPage } from './reset-phone-number';
+import { ComponentsModule } from '../../components/components.module';
 
 @NgModule({
   declarations: [
@@ -8,6 +9,7 @@ import { ResetPhoneNumberPage } from './reset-phone-number';
   ],
   imports: [
     IonicPageModule.forChild(ResetPhoneNumberPage),
+    ComponentsModule
   ],
 })
 export class ResetPhoneNumberPageModule {}

@@ -95,7 +95,7 @@ export class RefreshTokenInterceptor implements HttpInterceptor {
   private redirectToLoginIfUnauthenticated(eventError: HttpEvent < any > ) {
     if (eventError instanceof HttpErrorResponse && eventError.status == 401) {
       this.authService.setToken(null);
-      this.app.getRootNav().setRoot(LoginOptionsPage);
+      this.app.getRootNav().setRoot('LoginOptionsPage');
     }
   }
 

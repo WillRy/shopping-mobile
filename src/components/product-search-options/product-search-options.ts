@@ -3,6 +3,7 @@ import { ProductSearchProvider } from "../../providers/product-search/product-se
 import { CategoryHttpProvider } from "../../providers/http/category-http";
 import { Category } from "../../app/model";
 import { ViewController } from "ionic-angular";
+import { IonicPage } from "ionic-angular/navigation/ionic-page";
 
 /**
  * Generated class for the ProductSearchOptionsComponent component.
@@ -10,6 +11,7 @@ import { ViewController } from "ionic-angular";
  * See https://angular.io/api/core/Component for more info on Angular
  * Components.
  */
+@IonicPage()
 @Component({
   selector: "product-search-options",
   templateUrl: "product-search-options.html"

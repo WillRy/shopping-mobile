@@ -19,6 +19,7 @@ import {
   AuthProvider
 } from '../../providers/auth/auth';
 import { App } from 'ionic-angular';
+import { IonicPage } from 'ionic-angular/navigation/ionic-page';
 
 
 /**
@@ -27,6 +28,7 @@ import { App } from 'ionic-angular';
  * See https://angular.io/api/core/Component for more info on Angular
  * Components.
  */
+@IonicPage()
 @Component({
   selector: 'chat-group-list',
   templateUrl: 'chat-group-list.html'

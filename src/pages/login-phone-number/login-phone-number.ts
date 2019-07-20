@@ -1,8 +1,4 @@
-import { HttpClient } from '@angular/common/http';
 import { environment } from './../../environments/environment';
-import {
-  CustomerCreatePage
-} from './../customer-create/customer-create';
 import {
   FirebaseAuthProvider
 } from './../../providers/auth/firebase-auth';
@@ -19,9 +15,6 @@ import {
 import {
   AuthProvider
 } from '../../providers/auth/auth';
-import {
-  MainPage
-} from '../main/main';
 
 
 /**
@@ -90,11 +83,11 @@ export class LoginPhoneNumberPage {
   }
 
   redirectToMainPage() {
-    this.navCtrl.setRoot(MainPage);
+    this.navCtrl.setRoot('MainPage');
   }
 
   redirectToCustomerCreatePage() {
-    this.navCtrl.push(CustomerCreatePage);
+    this.navCtrl.push('CustomerCreatePage');
   }
 
 }

@@ -1,8 +1,5 @@
 import { ToastController } from 'ionic-angular';
 import {
-  MoreOptionsComponent
-} from './../../components/more-options/more-options';
-import {
   AudioRecorderProvider
 } from '../../providers/audio-recorder/audio-recorder';
 import {
@@ -32,8 +29,7 @@ import {
   SuperTabs
 } from 'ionic2-super-tabs';
 import { ChatInvitationProvider } from '../../providers/chat-invitation/chat-invitation';
-import { ProductListComponent } from '../../components/product-list/product-list';
-import { OrderListComponent } from '../../components/order-list/order-list';
+
 
 
 @IonicPage()
@@ -43,9 +39,9 @@ import { OrderListComponent } from '../../components/order-list/order-list';
 })
 export class MainPage {
 
-  orderList = OrderListComponent;
-  chatGroupList = ChatGroupListComponent;
-  productList = ProductListComponent;
+  orderList = 'OrderListComponent';
+  chatGroupList = 'ChatGroupListComponent';
+  productList = 'ProductListComponent';
 
   canShowSearchBar = false;
 
@@ -99,7 +95,7 @@ export class MainPage {
   }
 
   presentMoreOptions(event) {
-    const popover = this.popover.create(MoreOptionsComponent);
+    const popover = this.popover.create('MoreOptionsComponent');
     popover.present({
       ev: event
     });

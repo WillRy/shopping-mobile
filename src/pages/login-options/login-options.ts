@@ -1,4 +1,3 @@
-import { MainPage } from './../main/main';
 import {
   Component
 } from '@angular/core';
@@ -8,12 +7,6 @@ import {
   NavParams,
   ActionSheetController
 } from 'ionic-angular';
-import {
-  LoginPhoneNumberPage
-} from '../login-phone-number/login-phone-number';
-import {
-  ResetPhoneNumberPage
-} from '../reset-phone-number/reset-phone-number';
 import { AuthProvider } from '../../providers/auth/auth';
 
 /**
@@ -41,7 +34,7 @@ export class LoginOptionsPage {
     return this.auth.isFullyAuth().then((isAuth) => {
       if(isAuth){
         setTimeout(()=>{
-          this.navCtrl.setRoot(MainPage);
+          this.navCtrl.setRoot('MainPage');
         });
       }
       return !isAuth;
@@ -59,20 +52,20 @@ export class LoginOptionsPage {
         {
           text: 'Já tenho, quero entrar',
           handler: () => {
-            this.navCtrl.push(LoginPhoneNumberPage)
+            this.navCtrl.push('LoginPhoneNumberPage')
           }
 
         },
         {
           text: 'Já tenho, quero trocar de telefone',
           handler: () => {
-            this.navCtrl.push(ResetPhoneNumberPage)
+            this.navCtrl.push('ResetPhoneNumberPage')
           }
         },
         {
           text: 'Não tenho, quero criar uma conta',
           handler: () => {
-            this.navCtrl.push(LoginPhoneNumberPage)
+            this.navCtrl.push('LoginPhoneNumberPage')
           }
         },
         {
